@@ -109,6 +109,33 @@ nav {
   object-fit: cover;
   opacity: 0;
 }
+/* ─── HERO SOUND BUTTON ─── */
+.hero-sound-btn {
+  position: absolute; top: 5rem; right: 1.5rem; z-index: 3;
+  display: flex; align-items: center; gap: 0.5rem;
+  background: rgba(6,8,13,0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(200,169,110,0.3);
+  color: var(--gold);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.55rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  opacity: 0;
+}
+.hero-sound-btn:hover {
+  background: rgba(200,169,110,0.15);
+  border-color: var(--gold);
+}
+.hero-sound-btn svg {
+  width: 16px; height: 16px;
+  fill: currentColor; flex-shrink: 0;
+}
+.hero-sound-btn.is-playing {
+  border-color: rgba(200,169,110,0.15);
+}
 .hero-overlay {
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(to bottom, rgba(6,8,13,0.25) 0%, rgba(6,8,13,0.65) 50%, rgba(6,8,13,0.92) 80%, var(--black) 100%);
@@ -615,6 +642,10 @@ footer {
     </video>
   </div>
   <div class="hero-overlay"></div>
+  <button class="hero-sound-btn" id="heroSoundBtn" aria-label="Activar sonido">
+    <svg viewBox="0 0 24 24" id="soundIcon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>
+    <span id="soundLabel">Activar sonido</span>
+  </button>
   <div class="hero-content">
     <div class="hero-badge" id="heroBadge">Congreso Internacional &middot; Virtual &middot; Iberoam&eacute;rica</div>
     <h1 class="hero-title" data-splitting>FACE<strong>TECH</strong> 2026</h1>
@@ -825,8 +856,8 @@ footer {
 
       <div class="program-day reveal">
         <div class="program-day-img">
-          <!-- day1: #4 FOTO.jpg — Dr. Froilán Páez presentando en cátedra -->
-          <img src="../fotos/foto-04.jpg" alt="Teoría avanzada — Día 1" loading="lazy" decoding="async">
+          <!-- day1: foto-05 — Equipo médico en sala clínica con cámaras (horizontal, se adapta bien a 16/7) -->
+          <img src="../fotos/foto-05.png" alt="Teoría avanzada — Día 1" loading="lazy" decoding="async">
         </div>
         <div class="program-day-body">
           <div class="day-header">
@@ -1123,6 +1154,82 @@ window.addEventListener('DOMContentLoaded', function() {
       start: 'top top',
       end: 'bottom top',
       scrub: true
+    }
+  });
+
+  // ═══════════════════════════════════════
+  // 4b. HERO VIDEO — SOUND TOGGLE + PAUSE ON SCROLL
+  // ═══════════════════════════════════════
+  var heroVideo = document.getElementById('heroVideo');
+  var soundBtn = document.getElementById('heroSoundBtn');
+  var soundLabel = document.getElementById('soundLabel');
+  var soundIcon = document.getElementById('soundIcon');
+  var videoIsUnmuted = false;
+
+  // Show sound button after hero animation
+  heroTl.to(soundBtn, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.8);
+
+  // Try to autoplay unmuted (will fail on most browsers)
+  if (heroVideo) {
+    heroVideo.play().then(function() {
+      try {
+        heroVideo.muted = false;
+        videoIsUnmuted = true;
+        soundLabel.textContent = 'Silenciar';
+        soundBtn.classList.add('is-playing');
+      } catch(e) {
+        heroVideo.muted = true;
+      }
+    }).catch(function() {
+      heroVideo.muted = true;
+    });
+
+    // Check if unmute actually worked (some browsers revert)
+    setTimeout(function() {
+      if (heroVideo.muted) {
+        videoIsUnmuted = false;
+        soundLabel.textContent = 'Activar sonido';
+        soundBtn.classList.remove('is-playing');
+      }
+    }, 500);
+  }
+
+  // Sound button click handler
+  if (soundBtn && heroVideo) {
+    soundBtn.addEventListener('click', function() {
+      if (heroVideo.muted) {
+        heroVideo.muted = false;
+        videoIsUnmuted = true;
+        soundLabel.textContent = 'Silenciar';
+        soundBtn.classList.add('is-playing');
+        soundIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/>';
+      } else {
+        heroVideo.muted = true;
+        videoIsUnmuted = false;
+        soundLabel.textContent = 'Activar sonido';
+        soundBtn.classList.remove('is-playing');
+        soundIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/>';
+      }
+    });
+  }
+
+  // Pause video + mute when user scrolls past the hero
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'bottom top',
+    onEnterBack: function() {
+      if (heroVideo) {
+        heroVideo.play();
+        if (videoIsUnmuted) heroVideo.muted = false;
+        gsap.to(soundBtn, { opacity: 1, duration: 0.3 });
+      }
+    },
+    onLeave: function() {
+      if (heroVideo) {
+        heroVideo.pause();
+        heroVideo.muted = true;
+        gsap.to(soundBtn, { opacity: 0, duration: 0.3 });
+      }
     }
   });
 
