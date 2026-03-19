@@ -11,6 +11,9 @@
 <meta name="theme-color" content="#06080d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+<link rel="dns-prefetch" href="https://unpkg.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
 <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css">
@@ -29,7 +32,7 @@
   --gb: rgba(200,169,110,0.14);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: auto; }
+html { scroll-behavior: auto; overflow-x: hidden; }
 body {
   background: var(--black);
   color: var(--cream);
@@ -37,6 +40,7 @@ body {
   font-weight: 300;
   overflow-x: hidden;
 }
+h1, h2, h3 { overflow-wrap: break-word; word-break: break-word; }
 
 /* ─── SCROLL PROGRESS BAR ─── */
 .scroll-progress {
@@ -352,9 +356,14 @@ nav {
 
 /* ─── AUDIENCE ─── */
 #audience { background: var(--black); }
-.audience-img-slot { width: 100%; aspect-ratio: 16/9; margin-bottom: 2rem; overflow: hidden; }
+.audience-img-slot {
+  width: 100%; margin-bottom: 2rem; overflow: hidden;
+  max-height: 320px;
+  border: 1px solid rgba(200,169,110,0.2);
+}
 .audience-img-slot img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  display: block;
 }
 .audience-items { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem; }
 .audience-item {
@@ -418,12 +427,12 @@ nav {
   transition: border-color 0.3s;
 }
 .speaker-photo {
-  width: 100%; aspect-ratio: 1/1; max-height: 280px;
+  width: 100%; aspect-ratio: 3/4; min-height: 420px;
   position: relative; overflow: hidden;
 }
 .speaker-photo img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 0.4s ease;
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
+  display: block; transition: transform 0.4s ease;
 }
 .speaker-photo-fade {
   position: absolute; inset: 0; z-index: 1;
@@ -572,8 +581,9 @@ footer {
   .stat-item:nth-child(4n) { border-right: none; }
   .stat-item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(200,169,110,0.08); }
   .stat-item:last-child { border-bottom: none; }
+  .audience-img-slot { max-height: 480px; }
   .speakers-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
-  .speaker-photo { aspect-ratio: 3/4; max-height: none; }
+  .speaker-photo { min-height: 0; }
   .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; }
 }
 </style>
@@ -599,7 +609,7 @@ footer {
 ══════════════════════════════ -->
 <section id="hero">
   <div class="hero-video-wrap" id="heroVideoWrap">
-    <video autoplay muted loop playsinline poster="../fotos/foto-10.jpg" id="heroVideo">
+    <video autoplay muted loop playsinline poster="../fotos/foto-10.jpg" id="heroVideo" fetchpriority="high">
       <source src="../videos/video-hero.mov" type="video/mp4">
       <!-- TODO: Convertir #1 VIDEO_.mov a .mp4 (H.264) para máxima compatibilidad. Mientras tanto, el hero muestra la foto #10 como background-image CSS de fallback. -->
     </video>
@@ -678,44 +688,44 @@ footer {
 
       <div class="swiper-slide">
         <!-- gallery-1: #8 FOTO_.png — Cirujano operando con cámaras, plano cercano -->
-        <img src="../fotos/foto-08.png" alt="Cirugía en vivo transmitida con cámaras profesionales" loading="lazy">
+        <img src="../fotos/foto-08.png" alt="Cirugía en vivo transmitida con cámaras profesionales" loading="lazy" decoding="async">
         <div class="gallery-slide-cap">Cirug&iacute;a en vivo transmitida</div>
       </div>
 
       <div class="swiper-slide">
         <!-- gallery-2: #4 FOTO.jpg — Dr. Froilán Páez en podium, cátedra -->
-        <img src="../fotos/foto-04.jpg" alt="Ponencia académica de alto nivel" loading="lazy">
+        <img src="../fotos/foto-04.jpg" alt="Ponencia académica de alto nivel" loading="lazy" decoding="async">
         <div class="gallery-slide-cap">Teor&iacute;a avanzada con criterio</div>
       </div>
 
       <div class="swiper-slide">
         <!-- gallery-3: #5 FOTO_.png — Equipo médico con paciente y cámaras de transmisión -->
-        <img src="../fotos/foto-05.png" alt="Equipo médico en sala de transmisión" loading="lazy">
+        <img src="../fotos/foto-05.png" alt="Equipo médico en sala de transmisión" loading="lazy" decoding="async">
         <div class="gallery-slide-cap">Transmisi&oacute;n en tiempo real</div>
       </div>
 
       <div class="swiper-slide">
         <!-- gallery-4: #6 FOTO_.png — Grupo de médicos observando cirugía en pantallas -->
-        <img src="../fotos/foto-06.png" alt="Médicos observando cirugía en pantallas" loading="lazy">
+        <img src="../fotos/foto-06.png" alt="Médicos observando cirugía en pantallas" loading="lazy" decoding="async">
         <div class="gallery-slide-cap">Discusi&oacute;n interdisciplinaria</div>
       </div>
 
       <div class="swiper-slide">
         <!-- gallery-5: #9 FOTO_.jpg — Dr. Bareño presentando en conferencia -->
-        <img src="../fotos/foto-09.jpg" alt="Dr. John Bareño en conferencia internacional" loading="lazy">
+        <img src="../fotos/foto-09.jpg" alt="Dr. John Bareño en conferencia internacional" loading="lazy" decoding="async">
         <div class="gallery-slide-cap">Liderazgo acad&eacute;mico internacional</div>
       </div>
 
       <div class="swiper-slide">
         <!-- gallery-6: #10 FOTO_.jpg — Cirugía rinoplastia, atmosférico -->
-        <img src="../fotos/foto-10.jpg" alt="Cirugía de rinoplastia en vivo" loading="lazy">
+        <img src="../fotos/foto-10.jpg" alt="Cirugía de rinoplastia en vivo" loading="lazy" decoding="async">
         <div class="gallery-slide-cap">Rinoplastia ultras&oacute;nica en vivo</div>
       </div>
 
       <div class="swiper-slide">
-        <!-- gallery-7: #15 FOTO.jpg — Los 3 doctores, foto promocional -->
-        <img src="../fotos/foto-15.jpg" alt="Los tres cirujanos de FACETECH 2026" loading="lazy">
-        <div class="gallery-slide-cap">Tres especialidades. Un solo rostro.</div>
+        <!-- gallery-7: foto-06 — Médicos observando cirugía en pantallas -->
+        <img src="../fotos/foto-06.png" alt="Médicos observando cirugía en vivo" loading="lazy" decoding="async">
+        <div class="gallery-slide-cap">Formaci&oacute;n en tiempo real</div>
       </div>
 
     </div>
@@ -774,7 +784,7 @@ footer {
 
 <!-- ══════════════════════════════
   PARA QUIÉN
-  audience: #6 FOTO_.png — Médicos en uniforme quirúrgico observando
+  audience: doctores-grupo.jpg — Grupo de doctores FACETECH
 ══════════════════════════════ -->
 <section id="audience" class="s">
   <div class="s-inner">
@@ -782,7 +792,7 @@ footer {
     <h2 class="s-title reveal">&iquest;Para qui&eacute;n es<br><em>FACETECH?</em></h2>
     <div class="divider reveal"></div>
     <div class="audience-img-slot reveal">
-      <img src="../fotos/foto-06.png" alt="Médicos en uniforme quirúrgico observando cirugía en pantallas">
+      <img src="../fotos/doctores-grupo.jpg" alt="Grupo de doctores FACETECH 2026" loading="lazy" decoding="async">
     </div>
     <div class="audience-items">
       <div class="audience-item reveal"><div><strong>Oftalm&oacute;logos / Oculopl&aacute;sticos</strong>Que integran o quieren integrar el rejuvenecimiento facial global en su pr&aacute;ctica.</div></div>
@@ -816,7 +826,7 @@ footer {
       <div class="program-day reveal">
         <div class="program-day-img">
           <!-- day1: #4 FOTO.jpg — Dr. Froilán Páez presentando en cátedra -->
-          <img src="../fotos/foto-04.jpg" alt="Teoría avanzada — Día 1">
+          <img src="../fotos/foto-04.jpg" alt="Teoría avanzada — Día 1" loading="lazy" decoding="async">
         </div>
         <div class="program-day-body">
           <div class="day-header">
@@ -839,7 +849,7 @@ footer {
       <div class="program-day reveal">
         <div class="program-day-img">
           <!-- day2: #10 FOTO_.jpg — Cirugía rinoplastia con headband "Rinoplastia Fusión" -->
-          <img src="../fotos/foto-10.jpg" alt="Cirugía ORL en vivo — Día 2">
+          <img src="../fotos/foto-10.jpg" alt="Cirugía ORL en vivo — Día 2" loading="lazy" decoding="async">
         </div>
         <div class="program-day-body">
           <div class="day-header">
@@ -861,7 +871,7 @@ footer {
         <div class="program-day-img">
           <!-- day3: #8 FOTO_.png — Cirugía con cámaras profesionales -->
           <!-- TODO: Idealmente reemplazar con foto específica de blefaroplastia/oculoplástica cuando esté disponible -->
-          <img src="../fotos/foto-08.png" alt="Cirugía Oculoplástica — Día 3">
+          <img src="../fotos/foto-08.png" alt="Cirugía Oculoplástica — Día 3" loading="lazy" decoding="async">
         </div>
         <div class="program-day-body">
           <div class="day-header">
@@ -899,7 +909,7 @@ footer {
       <div class="speaker-card reveal">
         <div class="speaker-photo">
           <!-- TODO: Reemplazar con retrato profesional individual del Dr. John Bareño cuando esté disponible. Actualmente se usa foto en conferencia (#9). -->
-          <img src="../fotos/foto-09.jpg" alt="Dr. John Bareño">
+          <img src="../fotos/foto-09.jpg" alt="Dr. John Bareño" loading="lazy" decoding="async">
           <div class="speaker-photo-fade"></div>
         </div>
         <div class="speaker-body">
@@ -916,7 +926,7 @@ footer {
 
       <div class="speaker-card reveal">
         <div class="speaker-photo">
-          <img src="../fotos/foto-13.jpg" alt="Dr. Froilán Páez">
+          <img src="../fotos/foto-13.jpg" alt="Dr. Froilán Páez" loading="lazy" decoding="async">
           <div class="speaker-photo-fade"></div>
         </div>
         <div class="speaker-body">
@@ -933,7 +943,7 @@ footer {
 
       <div class="speaker-card reveal">
         <div class="speaker-photo">
-          <img src="../fotos/foto-14.jpg" alt="Dr. Daniel Páez">
+          <img src="../fotos/foto-14.jpg" alt="Dr. Daniel Páez" loading="lazy" decoding="async">
           <div class="speaker-photo-fade"></div>
         </div>
         <div class="speaker-body">
@@ -1002,7 +1012,7 @@ footer {
 ══════════════════════════════ -->
 <section id="urgency" class="s">
   <div class="urgency-bg">
-    <img src="../fotos/foto-15.jpg" alt="" loading="lazy">
+    <img src="../fotos/foto-15.jpg" alt="" loading="lazy" decoding="async">
   </div>
   <div class="urgency-ov"></div>
   <div class="urgency-content">
@@ -1030,14 +1040,14 @@ footer {
 <!-- ══════════════════════════════
   SCRIPTS — CDN
 ══════════════════════════════ -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script defer src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-(function() {
+window.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
   // ═══════════════════════════════════════
@@ -1253,7 +1263,7 @@ footer {
     }
   });
 
-})();
+});
 </script>
 </body>
 </html>
