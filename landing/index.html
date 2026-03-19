@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FACETECH 2026 — Congreso Internacional de Cirugía Facial Integrada</title>
+<meta name="description" content="FACETECH 2026 — Congreso Internacional de Cirugía Facial Integrada. 5-8 agosto 2026. 100% virtual. Cirugía en vivo, teoría avanzada, 3 especialidades. Desde USD 2,500.">
+<meta property="og:title" content="FACETECH 2026 — Cirugía · Tecnología · Función">
+<meta property="og:description" content="Congreso internacional de cirugía facial integrada. Virtual, iberoamérica, agosto 2026.">
+<meta property="og:image" content="../fotos/%2315%20FOTO.jpg">
+<meta name="theme-color" content="#06080d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+<link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting-cells.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<style>
+:root {
+  --black: #06080d;
+  --navy: #0b0f1c;
+  --gold: #C8A96E;
+  --gold-light: #E4CC9A;
+  --gold-dim: #5c4a2a;
+  --cream: #EDE8DF;
+  --cream-dim: #9a9088;
+  --white: #ffffff;
+  --glass: rgba(255,255,255,0.03);
+  --gb: rgba(200,169,110,0.14);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ─── SCROLL PROGRESS BAR ─── */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; z-index: 9999;
+  width: 0%; height: 2px;
+  background: var(--gold);
+  pointer-events: none;
+}
+
+/* ─── CUSTOM CURSOR ─── */
+@media (hover: hover) {
+  .custom-cursor {
+    position: fixed; top: 0; left: 0; z-index: 10000;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+    will-change: transform;
+  }
+}
+@media (hover: none) {
+  .custom-cursor { display: none !important; }
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.5rem;
+  background: rgba(6,8,13,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: 0.22em; color: var(--gold);
+}
+.nav-cta {
+  background: var(--gold); color: var(--black);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.6rem 1.3rem; text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--gold-light); }
+
+/* ─── HERO ─── */
+#hero {
+  height: 100svh; min-height: 600px;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  position: relative; overflow: hidden;
+  padding: 0 1.5rem 2.5rem;
+}
+.hero-video-wrap {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero-video-wrap video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(6,8,13,0.25) 0%, rgba(6,8,13,0.65) 50%, rgba(6,8,13,0.92) 80%, var(--black) 100%);
+}
+.hero-content {
+  position: relative; z-index: 2; max-width: 520px;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(200,169,110,0.3);
+  padding: 0.38rem 0.75rem; margin-bottom: 1.2rem;
+  opacity: 0;
+}
+.hero-badge::before { content: '\25CF'; font-size: 0.38rem; }
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 14vw, 6.5rem);
+  font-weight: 300; line-height: 0.88;
+  color: var(--white); margin-bottom: 0.6rem;
+}
+.hero-title .char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(30px);
+}
+.hero-title strong { font-weight: 600; font-style: italic; color: var(--gold); }
+.hero-subtitle {
+  font-size: 0.72rem; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream-dim); margin-bottom: 1.4rem;
+  opacity: 0;
+}
+.hero-pillars {
+  display: flex; gap: 0; margin-bottom: 1.8rem;
+  opacity: 0;
+}
+.hero-pillar {
+  font-size: 0.55rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold-light); padding: 0 0.9rem;
+  border-right: 1px solid var(--gold-dim);
+}
+.hero-pillar:first-child { padding-left: 0; }
+.hero-pillar:last-child { border-right: none; }
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+}
+.hero-meta-item { font-size: 0.7rem; color: var(--cream-dim); }
+.hero-btn {
+  display: inline-block; text-decoration: none;
+  background: var(--gold); color: var(--black);
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  opacity: 0;
+  transition: background 0.2s;
+}
+.hero-btn:hover { background: var(--gold-light); }
+.hero-scroll {
+  position: absolute; bottom: 1.2rem; right: 1.5rem; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  opacity: 0;
+}
+.hero-scroll-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, transparent, var(--gold));
+  animation: scrollPulse 2s 1.5s ease-in-out infinite;
+}
+.hero-scroll span {
+  font-size: 0.48rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold-dim); writing-mode: vertical-rl;
+}
+
+/* ─── GENERIC SECTION ─── */
+.s { position: relative; z-index: 1; }
+.s-inner { max-width: 900px; margin: 0 auto; padding: 4.5rem 1.5rem; }
+.s-label {
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.7rem;
+}
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 7vw, 3.8rem);
+  font-weight: 400; line-height: 1.05; color: var(--white);
+  margin-bottom: 0.9rem;
+}
+.s-title em { font-style: italic; color: var(--gold); }
+.s-title .word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.divider {
+  width: 46px; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin-bottom: 1.4rem;
+}
+.s-body { font-size: 0.9rem; color: var(--cream-dim); line-height: 1.8; margin-bottom: 1rem; }
+.s-body strong { color: var(--cream); font-weight: 500; }
+
+/* ─── WELCOME VIDEO ─── */
+#welcome { background: var(--navy); }
+.welcome-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+.welcome-text { order: 2; }
+.welcome-video-wrap { order: 1; position: relative; }
+.welcome-video-slot { width: 100%; aspect-ratio: 16/9; position: relative; overflow: hidden; background: #0e1118; }
+.welcome-video-placeholder {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; gap: 0.5rem;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 18px,
+    rgba(200,169,110,0.03) 18px, rgba(200,169,110,0.03) 19px
+  ), #0e1118;
+}
+.welcome-placeholder-label {
+  font-size: 0.52rem; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(200,169,110,0.1);
+  border: 1px solid rgba(200,169,110,0.3);
+  padding: 0.3rem 0.7rem;
+}
+.welcome-placeholder-desc {
+  font-size: 0.66rem; color: var(--cream-dim);
+  max-width: 230px; line-height: 1.5;
+}
+.video-play-ui {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.8rem;
+  cursor: pointer;
+}
+.play-circle {
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(200,169,110,0.1);
+  transition: all 0.3s;
+}
+.video-play-ui:hover .play-circle { background: rgba(200,169,110,0.22); transform: scale(1.06); }
+.play-tri {
+  width: 0; height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 16px solid var(--gold);
+  margin-left: 3px;
+}
+.video-play-ui span {
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-light);
+}
+.welcome-quote {
+  border-left: 2px solid var(--gold);
+  padding: 1.1rem 1.4rem; margin: 1.5rem 0;
+  background: rgba(200,169,110,0.04);
+}
+.welcome-quote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; font-style: italic;
+  color: var(--cream); line-height: 1.5;
+}
+
+/* ─── GALLERY (SWIPER) ─── */
+#gallery { background: var(--black); padding: 0; overflow: hidden; }
+.gallery-header { padding: 3.5rem 1.5rem 1.5rem; max-width: 900px; margin: 0 auto; }
+.gallery-swiper {
+  width: 100%;
+  padding-bottom: 2.5rem;
+}
+.gallery-swiper .swiper-slide {
+  aspect-ratio: 3/4;
+  position: relative; overflow: hidden;
+}
+.gallery-swiper .swiper-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gallery-slide-cap {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  padding: 2rem 1rem 1rem;
+  background: linear-gradient(to top, rgba(6,8,13,0.88), transparent);
+  font-size: 0.68rem; color: var(--cream-dim); text-align: center;
+}
+.gallery-swiper .swiper-pagination-bullet {
+  background: var(--gold-dim); opacity: 1;
+  width: 5px; height: 5px;
+}
+.gallery-swiper .swiper-pagination-bullet-active {
+  background: var(--gold);
+  transform: scale(1.5);
+}
+
+/* ─── STATS ─── */
+#stats {
+  background: var(--black);
+  border-top: 1px solid rgba(200,169,110,0.08);
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  max-width: 900px; margin: 0 auto;
+}
+.stat-item {
+  padding: 2.5rem 1rem; text-align: center;
+  border-right: 1px solid rgba(200,169,110,0.08);
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+}
+.stat-item:nth-child(2n) { border-right: none; }
+.stat-item:nth-last-child(-n+2) { border-bottom: none; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem,8vw,4rem);
+  font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 0.4rem;
+}
+.stat-lbl {
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-dim);
+}
+
+/* ─── WHY ─── */
+#why { background: var(--navy); }
+.why-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.55rem,5vw,2.4rem);
+  font-weight: 400; line-height: 1.35;
+  color: var(--white); margin-bottom: 2rem;
+}
+.why-quote strong { color: var(--gold); font-style: italic; }
+.why-items { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.5rem; }
+.why-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.1rem; border: 1px solid var(--gb); background: var(--glass);
+}
+.why-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 300;
+  color: rgba(200,169,110,0.22); line-height: 1; flex-shrink: 0; min-width: 1.8rem;
+}
+.why-text { font-size: 0.86rem; color: var(--cream-dim); line-height: 1.65; }
+.why-text strong { color: var(--cream); font-weight: 500; }
+
+/* ─── AUDIENCE ─── */
+#audience { background: var(--black); }
+.audience-img-slot { width: 100%; aspect-ratio: 16/9; margin-bottom: 2rem; overflow: hidden; }
+.audience-img-slot img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.audience-items { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem; }
+.audience-item {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  font-size: 0.86rem; color: var(--cream-dim); line-height: 1.65;
+  padding: 0.9rem; border-left: 2px solid var(--gold-dim);
+  background: rgba(200,169,110,0.02);
+}
+.audience-item strong { color: var(--cream); font-weight: 500; display: block; margin-bottom: 0.15rem; }
+.not-for {
+  margin-top: 2rem; padding: 1.1rem 1.4rem;
+  border: 1px solid rgba(200,169,110,0.09);
+}
+.not-for-title {
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cream-dim); margin-bottom: 0.8rem;
+}
+.not-for-item {
+  font-size: 0.78rem; color: rgba(200,169,110,0.35);
+  padding: 0.28rem 0;
+  text-decoration: line-through; text-decoration-color: rgba(200,169,110,0.2);
+}
+
+/* ─── PROGRAM ─── */
+#program { background: var(--navy); }
+.program-days { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+.program-day { border: 1px solid var(--gb); overflow: hidden; }
+.program-day-img { width: 100%; aspect-ratio: 16/7; overflow: hidden; }
+.program-day-img img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.program-day-body { padding: 1.5rem; }
+.day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.9rem; }
+.day-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 300; color: rgba(200,169,110,0.2); line-height: 1;
+}
+.day-tag {
+  font-size: 0.52rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  background: rgba(200,169,110,0.1); color: var(--gold);
+  border: 1px solid rgba(200,169,110,0.22); padding: 0.28rem 0.65rem;
+}
+.day-title-text { font-size: 0.88rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+.day-hours { font-size: 0.62rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.9rem; }
+.day-items { list-style: none; }
+.day-items li {
+  font-size: 0.8rem; color: var(--cream-dim);
+  padding: 0.38rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.5;
+}
+.day-items li:last-child { border-bottom: none; }
+.day-items li::before { content: '\2014'; color: var(--gold-dim); flex-shrink: 0; }
+
+/* ─── SPEAKERS ─── */
+#speakers { background: var(--black); }
+.speakers-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+.speaker-card {
+  border: 1px solid var(--gb); overflow: hidden;
+  transition: border-color 0.3s;
+}
+.speaker-photo {
+  width: 100%; aspect-ratio: 1/1; max-height: 280px;
+  position: relative; overflow: hidden;
+}
+.speaker-photo img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.4s ease;
+}
+.speaker-photo-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, var(--black) 0%, transparent 50%);
+}
+.speaker-body { padding: 1.4rem; }
+.speaker-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem;
+}
+.speaker-country {
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem;
+}
+.speaker-bio { font-size: 0.8rem; color: var(--cream-dim); line-height: 1.7; margin-bottom: 0.9rem; }
+.speaker-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag {
+  font-size: 0.52rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid rgba(200,169,110,0.22);
+  color: var(--cream-dim); padding: 0.22rem 0.5rem;
+}
+
+/* ─── PRICING ─── */
+#pricing { background: var(--navy); }
+.pricing-note {
+  font-size: 0.84rem; color: var(--cream-dim); line-height: 1.75;
+  margin-bottom: 2rem; padding: 1.2rem 1.4rem;
+  border: 1px solid var(--gb); background: rgba(200,169,110,0.03);
+}
+.pricing-note strong { color: var(--gold); }
+.pricing-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+.price-card { border: 1px solid var(--gb); padding: 2rem 1.5rem; background: var(--glass); position: relative; }
+.price-card.featured { border-color: var(--gold); background: rgba(200,169,110,0.04); }
+.price-badge {
+  display: inline-block;
+  font-size: 0.5rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--gold); color: var(--black);
+  padding: 0.28rem 0.7rem; margin-bottom: 0.9rem;
+}
+.price-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 600; color: var(--white); line-height: 1.1; margin-bottom: 0.45rem;
+}
+.price-tagline { font-size: 0.78rem; color: var(--cream-dim); margin-bottom: 1.3rem; line-height: 1.5; }
+.price-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.8rem; font-weight: 300; color: var(--gold); line-height: 1;
+}
+.price-amount sup { font-size: 1.3rem; vertical-align: top; margin-top: 0.55rem; display: inline-block; }
+.price-currency { font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold-dim); margin-bottom: 1.4rem; }
+.price-features { list-style: none; margin-bottom: 1.8rem; }
+.price-features li {
+  display: flex; gap: 0.7rem; align-items: flex-start;
+  font-size: 0.82rem; color: var(--cream-dim);
+  padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.5;
+}
+.price-features li:last-child { border-bottom: none; }
+.ck { color: var(--gold); flex-shrink: 0; font-size: 0.72rem; margin-top: 0.12rem; }
+.price-btn {
+  display: block; width: 100%; text-align: center;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 1rem; text-decoration: none;
+  transition: all 0.25s; cursor: pointer; border: none;
+}
+.btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+.btn-outline:hover { background: var(--gold); color: var(--black); }
+.btn-solid { background: var(--gold); color: var(--black); }
+.btn-solid:hover { background: var(--gold-light); }
+
+/* ─── URGENCY ─── */
+#urgency { position: relative; overflow: hidden; }
+.urgency-bg {
+  position: absolute; inset: 0; z-index: 0;
+}
+.urgency-bg img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.urgency-ov {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(6,8,13,0.97) 0%, rgba(6,8,13,0.85) 55%, rgba(6,8,13,0.65) 100%);
+}
+.urgency-content {
+  position: relative; z-index: 2;
+  max-width: 580px; margin: 0 auto;
+  padding: 5rem 1.5rem; text-align: center;
+}
+.urgency-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem,7vw,3.5rem);
+  font-weight: 400; color: var(--white);
+  line-height: 1.15; margin-bottom: 1rem;
+}
+.urgency-title em { font-style: italic; color: var(--gold); }
+.urgency-sub { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.8; margin-bottom: 2.5rem; }
+.urgency-sub strong { color: var(--cream); font-weight: 500; }
+.urgency-cta {
+  display: inline-block; text-decoration: none;
+  background: var(--gold); color: var(--black);
+  font-size: 0.76rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 1.15rem 3rem; margin-bottom: 1rem;
+  transition: background 0.2s; width: 100%; max-width: 340px; text-align: center;
+}
+.urgency-cta:hover { background: var(--gold-light); }
+.urgency-note { font-size: 0.63rem; color: var(--cream-dim); letter-spacing: 0.07em; }
+.stripe-line {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  font-size: 0.6rem; color: var(--cream-dim); margin-top: 1.2rem; opacity: 0.65;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--black);
+  border-top: 1px solid rgba(200,169,110,0.08);
+  padding: 2.5rem 1.5rem; text-align: center;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: 0.22em; color: var(--gold); margin-bottom: 0.8rem;
+}
+.footer-info { font-size: 0.7rem; color: var(--cream-dim); line-height: 1.9; margin-bottom: 0.8rem; }
+.footer-info a { color: var(--gold); text-decoration: none; }
+.footer-copy { font-size: 0.58rem; color: rgba(200,169,110,0.22); letter-spacing: 0.1em; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes scrollPulse {
+  0%,100% { opacity:1; transform:scaleY(1); }
+  50%     { opacity:0.3; transform:scaleY(0.55); }
+}
+
+/* ─── REVEAL (initial state for GSAP) ─── */
+.reveal { opacity: 0; transform: translateY(30px); }
+
+/* ─── RESPONSIVE ─── */
+@media (min-width: 700px) {
+  .s-inner { padding: 6rem 2rem; }
+  .welcome-grid { grid-template-columns: 1fr 1fr; align-items: center; }
+  .welcome-text { order: 1; }
+  .welcome-video-wrap { order: 2; }
+  .stats-grid { grid-template-columns: repeat(4,1fr); }
+  .stat-item:nth-child(2n) { border-right: 1px solid rgba(200,169,110,0.08); }
+  .stat-item:nth-child(4n) { border-right: none; }
+  .stat-item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(200,169,110,0.08); }
+  .stat-item:last-child { border-bottom: none; }
+  .speakers-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .speaker-photo { aspect-ratio: 3/4; max-height: none; }
+  .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- CUSTOM CURSOR (desktop only) -->
+<div class="custom-cursor" id="customCursor"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">FACETECH</div>
+  <a href="#pricing" class="nav-cta">Inscribirse</a>
+</nav>
+
+<!-- ══════════════════════════════
+  HERO
+  Video de fondo: #1 VIDEO_.mov (loop, muted, autoplay)
+  Poster/fallback: #10 FOTO_.jpg (cirugía rinoplastia, oscuro)
+══════════════════════════════ -->
+<section id="hero">
+  <div class="hero-video-wrap" id="heroVideoWrap">
+    <video autoplay muted loop playsinline poster="../fotos/%2310%20FOTO_.jpg" id="heroVideo">
+      <source src="../videos/%231%20VIDEO_.mov" type="video/quicktime">
+      <!-- TODO: Convertir #1 VIDEO_.mov a .mp4 (H.264) para compatibilidad con todos los navegadores. El formato .mov puede no reproducirse en Chrome/Firefox. -->
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge" id="heroBadge">Congreso Internacional &middot; Virtual &middot; Iberoam&eacute;rica</div>
+    <h1 class="hero-title" data-splitting>FACE<strong>TECH</strong> 2026</h1>
+    <p class="hero-subtitle" id="heroSubtitle">Cirug&iacute;a &middot; Tecnolog&iacute;a &middot; Funci&oacute;n &mdash; Un Solo Rostro</p>
+    <div class="hero-pillars" id="heroPillars">
+      <span class="hero-pillar">Cirug&iacute;a</span>
+      <span class="hero-pillar">Tecnolog&iacute;a</span>
+      <span class="hero-pillar">Funci&oacute;n</span>
+    </div>
+    <div class="hero-meta" id="heroMeta">
+      <span class="hero-meta-item">5 &ndash; 8 Agosto 2026</span>
+      <span class="hero-meta-item">100% Virtual</span>
+      <span class="hero-meta-item">Toda Iberoam&eacute;rica</span>
+    </div>
+    <a href="#pricing" class="hero-btn" id="heroBtn">Ver Paquetes &rarr;</a>
+  </div>
+  <div class="hero-scroll" id="heroScroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  BIENVENIDA + VIDEO CON VOZ
+  TODO: Reemplazar placeholder con video de bienvenida cuando esté disponible.
+  Formato esperado: embed YouTube o .mp4 con controles visibles.
+══════════════════════════════ -->
+<section id="welcome" class="s">
+  <div class="s-inner">
+    <div class="welcome-grid">
+      <div class="welcome-text reveal">
+        <p class="s-label">Bienvenida</p>
+        <h2 class="s-title">No asistes a clases.<br><em>Entiendes el criterio.</em></h2>
+        <div class="divider"></div>
+        <p class="s-body">FACETECH no es un congreso de t&eacute;cnicas aisladas. Es un espacio donde tres de los cirujanos faciales m&aacute;s rigurosos de iberoam&eacute;rica te ense&ntilde;an a pensar la cirug&iacute;a facial como una unidad anat&oacute;mica y funcional.</p>
+        <div class="welcome-quote">
+          <p>&ldquo;La tecnolog&iacute;a no reemplaza la cirug&iacute;a. La eleva. Y la est&eacute;tica nunca se impone sobre la funci&oacute;n.&rdquo;</p>
+        </div>
+        <p class="s-body"><strong>Cirug&iacute;a real en vivo. Discusi&oacute;n abierta. Criterio quir&uacute;rgico sin filtros.</strong> Esto es FACETECH.</p>
+      </div>
+      <div class="welcome-video-wrap reveal">
+        <div class="welcome-video-slot">
+          <!-- TODO: Reemplazar este placeholder con el video de bienvenida (60-90s, los 3 doctores o Dr. Bareño hablando a cámara). Embed YouTube o <video> con controles visibles. -->
+          <div class="welcome-video-placeholder">
+            <div style="font-size:1.8rem;opacity:0.35;">&#127908;</div>
+            <span class="welcome-placeholder-label">VIDEO BIENVENIDA CON VOZ</span>
+            <p class="welcome-placeholder-desc">60-90s &middot; Los 3 doctores a c&aacute;mara. Directo y con convicci&oacute;n.</p>
+          </div>
+          <div class="video-play-ui">
+            <div class="play-circle"><div class="play-tri"></div></div>
+            <span>Ver mensaje de bienvenida</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  GALERÍA ROTANTE — SWIPER.JS
+  7 slides con fotos reales del congreso
+══════════════════════════════ -->
+<section id="gallery" class="s">
+  <div class="gallery-header reveal">
+    <p class="s-label">Lo que vivir&aacute;s</p>
+    <h2 class="s-title">Alta <em>cirug&iacute;a</em><br>en tiempo real</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="swiper gallery-swiper">
+    <div class="swiper-wrapper">
+
+      <div class="swiper-slide">
+        <!-- gallery-1: #8 FOTO_.png — Cirujano operando con cámaras, plano cercano -->
+        <img src="../fotos/%238%20FOTO_.png" alt="Cirugía en vivo transmitida con cámaras profesionales" loading="lazy">
+        <div class="gallery-slide-cap">Cirug&iacute;a en vivo transmitida</div>
+      </div>
+
+      <div class="swiper-slide">
+        <!-- gallery-2: #4 FOTO.jpg — Dr. Froilán Páez en podium, cátedra -->
+        <img src="../fotos/%234%20FOTO.jpg" alt="Ponencia académica de alto nivel" loading="lazy">
+        <div class="gallery-slide-cap">Teor&iacute;a avanzada con criterio</div>
+      </div>
+
+      <div class="swiper-slide">
+        <!-- gallery-3: #5 FOTO_.png — Equipo médico con paciente y cámaras de transmisión -->
+        <img src="../fotos/%235%20FOTO_.png" alt="Equipo médico en sala de transmisión" loading="lazy">
+        <div class="gallery-slide-cap">Transmisi&oacute;n en tiempo real</div>
+      </div>
+
+      <div class="swiper-slide">
+        <!-- gallery-4: #6 FOTO_.png — Grupo de médicos observando cirugía en pantallas -->
+        <img src="../fotos/%236%20FOTO_.png" alt="Médicos observando cirugía en pantallas" loading="lazy">
+        <div class="gallery-slide-cap">Discusi&oacute;n interdisciplinaria</div>
+      </div>
+
+      <div class="swiper-slide">
+        <!-- gallery-5: #9 FOTO_.jpg — Dr. Bareño presentando en conferencia -->
+        <img src="../fotos/%239%20FOTO_.jpg" alt="Dr. John Bareño en conferencia internacional" loading="lazy">
+        <div class="gallery-slide-cap">Liderazgo acad&eacute;mico internacional</div>
+      </div>
+
+      <div class="swiper-slide">
+        <!-- gallery-6: #10 FOTO_.jpg — Cirugía rinoplastia, atmosférico -->
+        <img src="../fotos/%2310%20FOTO_.jpg" alt="Cirugía de rinoplastia en vivo" loading="lazy">
+        <div class="gallery-slide-cap">Rinoplastia ultras&oacute;nica en vivo</div>
+      </div>
+
+      <div class="swiper-slide">
+        <!-- gallery-7: #15 FOTO.jpg — Los 3 doctores, foto promocional -->
+        <img src="../fotos/%2315%20FOTO.jpg" alt="Los tres cirujanos de FACETECH 2026" loading="lazy">
+        <div class="gallery-slide-cap">Tres especialidades. Un solo rostro.</div>
+      </div>
+
+    </div>
+    <div class="swiper-pagination"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats" class="s">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="3" data-suffix="+">0</div>
+      <div class="stat-lbl">Especialidades integradas</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="14" data-suffix="+">0</div>
+      <div class="stat-lbl">Horas de teor&iacute;a avanzada</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="8" data-suffix="+">0</div>
+      <div class="stat-lbl">Horas de cirug&iacute;a en vivo</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="100" data-suffix="%">0</div>
+      <div class="stat-lbl">Virtual &mdash; desde cualquier pa&iacute;s</div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ FACETECH -->
+<section id="why" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Filosof&iacute;a</p>
+    <p class="why-quote reveal">&ldquo;No puedes operar un p&aacute;rpado sin entender el tercio medio. No puedes hacer lifting sin <strong>entender la funci&oacute;n.&rdquo;</strong></p>
+    <div class="divider reveal"></div>
+    <div class="why-items">
+      <div class="why-item reveal">
+        <div class="why-num">01</div>
+        <div class="why-text"><strong>Criterio quir&uacute;rgico, no t&eacute;cnica aislada.</strong> Te ense&ntilde;amos cu&aacute;ndo indicar, por qu&eacute; hacerlo y c&oacute;mo integrarlo en un plan facial completo.</div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">02</div>
+        <div class="why-text"><strong>Cirug&iacute;a real en vivo.</strong> No simulaciones. Procedimientos reales con discusi&oacute;n abierta de decisiones intraoperatorias, errores y complicaciones.</div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">03</div>
+        <div class="why-text"><strong>Tres especialidades. Un solo rostro.</strong> Ocupl&aacute;stica, ORL y tecnolog&iacute;a fot&oacute;nica dialogando en el mismo espacio como deben dialogar.</div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">04</div>
+        <div class="why-text"><strong>Aplicable desde el d&iacute;a siguiente.</strong> Todo lo que ver&aacute;s tiene aplicabilidad cl&iacute;nica inmediata en tu pr&aacute;ctica quir&uacute;rgica real.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  PARA QUIÉN
+  audience: #6 FOTO_.png — Médicos en uniforme quirúrgico observando
+══════════════════════════════ -->
+<section id="audience" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Perfil del asistente</p>
+    <h2 class="s-title reveal">&iquest;Para qui&eacute;n es<br><em>FACETECH?</em></h2>
+    <div class="divider reveal"></div>
+    <div class="audience-img-slot reveal">
+      <img src="../fotos/%236%20FOTO_.png" alt="Médicos en uniforme quirúrgico observando cirugía en pantallas">
+    </div>
+    <div class="audience-items">
+      <div class="audience-item reveal"><div><strong>Oftalm&oacute;logos / Ocupl&aacute;sticos</strong>Que integran o quieren integrar el rejuvenecimiento facial global en su pr&aacute;ctica.</div></div>
+      <div class="audience-item reveal"><div><strong>Cirujanos pl&aacute;sticos con enfoque facial</strong>Que buscan elevar su nivel t&eacute;cnico y conceptual m&aacute;s all&aacute; de las t&eacute;cnicas convencionales.</div></div>
+      <div class="audience-item reveal"><div><strong>Otorrinolaring&oacute;logos</strong>Con inter&eacute;s en cirug&iacute;a facial, rinoplastia estructural, v&iacute;a a&eacute;rea y funci&oacute;n nasal integrada.</div></div>
+      <div class="audience-item reveal"><div><strong>Cirujanos maxilofaciales</strong>Con perspectiva anat&oacute;mica del tercio medio y superior del rostro.</div></div>
+    </div>
+    <div class="not-for reveal">
+      <div class="not-for-title">Este congreso NO es para</div>
+      <div class="not-for-item">Medicina est&eacute;tica no quir&uacute;rgica</div>
+      <div class="not-for-item">T&eacute;cnicas aisladas de rellenos o procedimientos superficiales</div>
+      <div class="not-for-item">Abordajes exclusivamente dermatol&oacute;gicos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  PROGRAMA
+  day1: #4 FOTO.jpg — Froilán en cátedra/podium
+  day2: #10 FOTO_.jpg — Cirugía rinoplastia
+  day3: #8 FOTO_.png — Cirugía con cámaras (mejor disponible para blefaroplastia)
+══════════════════════════════ -->
+<section id="program" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Programa acad&eacute;mico</p>
+    <h2 class="s-title reveal">2.5 d&iacute;as de<br><em>alta intensidad</em></h2>
+    <div class="divider reveal"></div>
+    <p class="s-body reveal">14 horas de teor&iacute;a avanzada + 8+ horas de cirug&iacute;a en vivo. Dise&ntilde;ado para m&aacute;xima retenci&oacute;n y aplicabilidad cl&iacute;nica inmediata.</p>
+    <div class="program-days">
+
+      <div class="program-day reveal">
+        <div class="program-day-img">
+          <!-- day1: #4 FOTO.jpg — Dr. Froilán Páez presentando en cátedra -->
+          <img src="../fotos/%234%20FOTO.jpg" alt="Teoría avanzada — Día 1">
+        </div>
+        <div class="program-day-body">
+          <div class="day-header">
+            <div class="day-num">01</div>
+            <span class="day-tag">08:00 &ndash; 17:30 &middot; 9h</span>
+          </div>
+          <div class="day-title-text">Teor&iacute;a Avanzada</div>
+          <div class="day-hours">D&iacute;a completo &middot; Alta intensidad conceptual</div>
+          <ul class="day-items">
+            <li>An&aacute;lisis integral del envejecimiento facial</li>
+            <li>Relaci&oacute;n p&aacute;rpados, tercio medio y funci&oacute;n</li>
+            <li>Principios del lifting facial moderno</li>
+            <li>Integraci&oacute;n racional de tecnolog&iacute;a en cirug&iacute;a</li>
+            <li>Funci&oacute;n nasal, v&iacute;a a&eacute;rea y armon&iacute;a facial</li>
+            <li>Casos cl&iacute;nicos integrados e interdisciplinarios</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="program-day reveal">
+        <div class="program-day-img">
+          <!-- day2: #10 FOTO_.jpg — Cirugía rinoplastia con headband "Rinoplastia Fusión" -->
+          <img src="../fotos/%2310%20FOTO_.jpg" alt="Cirugía ORL en vivo — Día 2">
+        </div>
+        <div class="program-day-body">
+          <div class="day-header">
+            <div class="day-num">02</div>
+            <span class="day-tag">Ma&ntilde;ana + Tarde</span>
+          </div>
+          <div class="day-title-text">Teor&iacute;a (am) + Cirug&iacute;a ORL en Vivo (pm)</div>
+          <div class="day-hours">08:00&ndash;13:00 teor&iacute;a &middot; 14:00&ndash;18:00 cirug&iacute;a en vivo</div>
+          <ul class="day-items">
+            <li>Teor&iacute;a de preparaci&oacute;n quir&uacute;rgica &mdash; 5 horas</li>
+            <li>Cirug&iacute;a ORL en vivo: nariz, estructura, v&iacute;a a&eacute;rea</li>
+            <li>Rinoplastia estructural y ultras&oacute;nica comentada</li>
+            <li>Discusi&oacute;n abierta de indicaciones y complicaciones</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="program-day reveal">
+        <div class="program-day-img">
+          <!-- day3: #8 FOTO_.png — Cirugía con cámaras profesionales -->
+          <!-- TODO: Idealmente reemplazar con foto específica de blefaroplastia/oculoplástica cuando esté disponible -->
+          <img src="../fotos/%238%20FOTO_.png" alt="Cirugía Oculoplástica — Día 3">
+        </div>
+        <div class="program-day-body">
+          <div class="day-header">
+            <div class="day-num">03</div>
+            <span class="day-tag">08:00 &ndash; 13:00 &middot; 5h cirug&iacute;a</span>
+          </div>
+          <div class="day-title-text">Cirug&iacute;a Ocupl&aacute;stica + Lifting Endosc&oacute;pico</div>
+          <div class="day-hours">4.5 &ndash; 5 horas de cirug&iacute;a transmitida en vivo</div>
+          <ul class="day-items">
+            <li>Blefaroplastia en vivo con tecnolog&iacute;a l&aacute;ser integrada</li>
+            <li>Lifting endosc&oacute;pico facial &mdash; tercio medio y superior</li>
+            <li>An&aacute;lisis de decisiones intraoperatorias en tiempo real</li>
+            <li>Preguntas abiertas durante la cirug&iacute;a</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  PONENTES
+  speaker-bareno: #9 FOTO_.jpg — Dr. Bareño presentando en conferencia
+  speaker-froilan: #13 FOTO_.jpg — Retrato profesional con lentes y saco gris
+  speaker-daniel: #14 FOTO_.jpg — Retrato profesional con saco vinotinto
+══════════════════════════════ -->
+<section id="speakers" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Liderazgo acad&eacute;mico</p>
+    <h2 class="s-title reveal">Los <em>cirujanos</em><br>detr&aacute;s de FACETECH</h2>
+    <div class="divider reveal"></div>
+    <div class="speakers-list">
+
+      <div class="speaker-card reveal">
+        <div class="speaker-photo">
+          <!-- TODO: Reemplazar con retrato profesional individual del Dr. John Bareño cuando esté disponible. Actualmente se usa foto en conferencia (#9). -->
+          <img src="../fotos/%239%20FOTO_.jpg" alt="Dr. John Bareño">
+          <div class="speaker-photo-fade"></div>
+        </div>
+        <div class="speaker-body">
+          <div class="speaker-name">Dr. John Bare&ntilde;o</div>
+          <div class="speaker-country">Colombia</div>
+          <p class="speaker-bio">M&eacute;dico Oft&aacute;lmologo. Supraespecialista en Ocupl&aacute;stica. Vicepresidente de la Asociaci&oacute;n Colombiana de Cirug&iacute;a Pl&aacute;stica Ocular. Miembro de SOLAFACE. Formaci&oacute;n avanzada en Hospital Quinze-Vingt, Par&iacute;s. Conferencista internacional en rejuvenecimiento y cirug&iacute;a est&eacute;tica facial.</p>
+          <div class="speaker-tags">
+            <span class="tag">Ocupl&aacute;stica</span>
+            <span class="tag">Lifting Endosc&oacute;pico</span>
+            <span class="tag">Rejuvenecimiento</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="speaker-card reveal">
+        <div class="speaker-photo">
+          <img src="../fotos/%2313%20FOTO_.jpg" alt="Dr. Froilán Páez">
+          <div class="speaker-photo-fade"></div>
+        </div>
+        <div class="speaker-body">
+          <div class="speaker-name">Dr. Froil&aacute;n P&aacute;ez</div>
+          <div class="speaker-country">Venezuela</div>
+          <p class="speaker-bio">Otorrinolaring&oacute;logo especialista en Cirug&iacute;a Facial. Egresado Universidad Central de Venezuela. Visiting Fellow en Oregon Health &amp; Science University, EE.UU. +15 a&ntilde;os de experiencia. 600+ cirug&iacute;as anuales. Conferencista en Madrid, Chile, Australia y Ecuador. Referente iberoamericano en rinoplastia ultras&oacute;nica.</p>
+          <div class="speaker-tags">
+            <span class="tag">Rinoplastia Ultras&oacute;nica</span>
+            <span class="tag">Cirug&iacute;a Nasal</span>
+            <span class="tag">V&iacute;a A&eacute;rea</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="speaker-card reveal">
+        <div class="speaker-photo">
+          <img src="../fotos/%2314%20FOTO_.jpg" alt="Dr. Daniel Páez">
+          <div class="speaker-photo-fade"></div>
+        </div>
+        <div class="speaker-body">
+          <div class="speaker-name">Dr. Daniel P&aacute;ez</div>
+          <div class="speaker-country">Venezuela</div>
+          <p class="speaker-bio">Oft&aacute;lmologo Ocupl&aacute;stico. Especialista en Cirug&iacute;a Pl&aacute;stica Oculofacial, Medicina Est&eacute;tica Avanzada y Medicina Fot&oacute;nica. Experto en la integraci&oacute;n racional de tecnolog&iacute;as l&aacute;ser y dispositivos de energ&iacute;a como herramienta complementaria y potenciadora de la cirug&iacute;a facial.</p>
+          <div class="speaker-tags">
+            <span class="tag">Blefaroplastia</span>
+            <span class="tag">Medicina Fot&oacute;nica</span>
+            <span class="tag">L&aacute;ser</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Inversi&oacute;n</p>
+    <h2 class="s-title reveal">Elige tu<br><em>experiencia</em></h2>
+    <div class="divider reveal"></div>
+    <div class="pricing-note reveal">
+      Todos los paquetes incluyen el <strong>CORE FACETECH completo</strong> &mdash; 14 horas de teor&iacute;a avanzada y certificaci&oacute;n oficial. La diferencia est&aacute; en el acceso a los m&oacute;dulos quir&uacute;rgicos en vivo.
+    </div>
+    <div class="pricing-cards">
+      <div class="price-card reveal">
+        <div class="price-name">FACETECH<br>+ Medio D&iacute;a</div>
+        <p class="price-tagline">Teor&iacute;a completa m&aacute;s un m&oacute;dulo quir&uacute;rgico a tu elecci&oacute;n.</p>
+        <div class="price-amount"><sup>$</sup>2,500</div>
+        <div class="price-currency">USD &middot; Pago &uacute;nico</div>
+        <ul class="price-features">
+          <li><span class="ck">&#10022;</span>14 horas de teor&iacute;a avanzada (D&iacute;as 1 y 2 am)</li>
+          <li><span class="ck">&#10022;</span>Certificaci&oacute;n oficial FACETECH</li>
+          <li><span class="ck">&#10022;</span>Elecci&oacute;n de UN m&oacute;dulo quir&uacute;rgico:<br><small style="color:var(--gold-dim);padding-left:0.3rem;">Cirug&iacute;a ORL &oacute; Ocupl&aacute;stica + Lifting</small></li>
+        </ul>
+        <!-- Reemplazar href con Payment Link de Stripe -->
+        <a href="#pricing" class="price-btn btn-outline">Inscribirse en este paquete</a>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-badge">M&aacute;s completo</div>
+        <div class="price-name">FULL FACE<br>Experience</div>
+        <p class="price-tagline">La experiencia FACETECH completa. Todo incluido.</p>
+        <div class="price-amount"><sup>$</sup>3,000</div>
+        <div class="price-currency">USD &middot; Pago &uacute;nico</div>
+        <ul class="price-features">
+          <li><span class="ck">&#10022;</span>14 horas de teor&iacute;a avanzada (D&iacute;as 1 y 2 am)</li>
+          <li><span class="ck">&#10022;</span>Cirug&iacute;a ORL en vivo &mdash; D&iacute;a 2 tarde</li>
+          <li><span class="ck">&#10022;</span>Ocupl&aacute;stica + Lifting endosc&oacute;pico &mdash; D&iacute;a 3</li>
+          <li><span class="ck">&#10022;</span>Asientos preferenciales en transmisi&oacute;n</li>
+          <li><span class="ck">&#10022;</span>Acceso a grabaciones quir&uacute;rgicas</li>
+          <li><span class="ck">&#10022;</span>Certificaci&oacute;n Full Face FACETECH</li>
+        </ul>
+        <!-- Reemplazar href con Payment Link de Stripe -->
+        <a href="#pricing" class="price-btn btn-solid">Inscribirse &mdash; Full Face</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  URGENCIA / CTA FINAL
+  urgency-bg: #15 FOTO.jpg — Foto grupal de los 3 doctores, oscura y dramática
+══════════════════════════════ -->
+<section id="urgency" class="s">
+  <div class="urgency-bg">
+    <img src="../fotos/%2315%20FOTO.jpg" alt="" loading="lazy">
+  </div>
+  <div class="urgency-ov"></div>
+  <div class="urgency-content">
+    <p class="s-label">Cupos limitados</p>
+    <h2 class="urgency-title reveal">Asegura tu<br>lugar en<br><em>FACETECH</em></h2>
+    <p class="urgency-sub reveal">El congreso es <strong>100% virtual</strong> &mdash; accedes desde cualquier pa&iacute;s de iberoam&eacute;rica. Los cupos son limitados para mantener la calidad acad&eacute;mica. Pago seguro en USD v&iacute;a Stripe.</p>
+    <a href="#pricing" class="urgency-cta reveal">Ver paquetes e inscribirse</a>
+    <p class="urgency-note reveal">5 &ndash; 8 de agosto de 2026 &middot; Virtual &middot; Iberoam&eacute;rica</p>
+    <div class="stripe-line reveal">&#128274; Pagos procesados con Stripe &middot; SSL encriptado &middot; USD</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FACETECH 2026</div>
+  <div class="footer-info">
+    Congreso Internacional de Cirug&iacute;a Facial Integrada<br>
+    5 &ndash; 8 de agosto de 2026 &middot; 100% Virtual &middot; Iberoam&eacute;rica<br>
+    <a href="mailto:info@facetech2026.com">info@facetech2026.com</a>
+    <!-- TODO: Cambiar por email real del congreso -->
+  </div>
+  <div class="footer-copy">&copy; 2026 FACETECH &middot; Cirug&iacute;a &middot; Tecnolog&iacute;a &middot; Funci&oacute;n &middot; Un Solo Rostro</div>
+</footer>
+
+<!-- ══════════════════════════════
+  SCRIPTS — CDN
+══════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+(function() {
+  'use strict';
+
+  // ═══════════════════════════════════════
+  // 1. LENIS — SMOOTH SCROLL
+  // ═══════════════════════════════════════
+  var lenis = new Lenis({
+    duration: 1.2,
+    easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+    orientation: 'vertical',
+    smoothWheel: true
+  });
+
+  lenis.on('scroll', ScrollTrigger.update);
+
+  gsap.ticker.add(function(time) {
+    lenis.raf(time * 1000);
+  });
+  gsap.ticker.lagSmoothing(0);
+
+  // ═══════════════════════════════════════
+  // 2. SPLITTING.JS — HERO TITLE
+  // ═══════════════════════════════════════
+  Splitting({ target: '[data-splitting]', by: 'chars' });
+
+  // ═══════════════════════════════════════
+  // 3. HERO — ENTRADA CINEMATOGRÁFICA
+  // ═══════════════════════════════════════
+  var heroTl = gsap.timeline({ delay: 0.3 });
+
+  // Video fade in
+  heroTl.to('#heroVideo', {
+    opacity: 1,
+    duration: 1.2,
+    ease: 'power2.out'
+  }, 0);
+
+  // Título letra por letra
+  var heroChars = document.querySelectorAll('.hero-title .char');
+  heroTl.to(heroChars, {
+    opacity: 1,
+    y: 0,
+    duration: 0.6,
+    stagger: 0.04,
+    ease: 'power3.out'
+  }, 0.2);
+
+  // Badge, subtitle, pillars, meta, button — cascada
+  heroTl.to('#heroBadge', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.6);
+  heroTl.to('#heroSubtitle', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.75);
+  heroTl.to('#heroPillars', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.9);
+  heroTl.to('#heroMeta', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.05);
+  heroTl.to('#heroBtn', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.2);
+  heroTl.to('#heroScroll', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.5);
+
+  // Set initial y for cascade elements
+  gsap.set(['#heroBadge', '#heroSubtitle', '#heroPillars', '#heroMeta', '#heroBtn', '#heroScroll'], {
+    y: 20
+  });
+
+  // ═══════════════════════════════════════
+  // 4. PARALLAX — HERO VIDEO
+  // ═══════════════════════════════════════
+  gsap.to('#heroVideoWrap', {
+    yPercent: -20,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '#hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true
+    }
+  });
+
+  // ═══════════════════════════════════════
+  // 5. REVEAL AL SCROLL — GSAP ScrollTrigger
+  // ═══════════════════════════════════════
+  gsap.utils.toArray('.reveal').forEach(function(el) {
+    gsap.fromTo(el,
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          once: true
+        }
+      }
+    );
+  });
+
+  // ═══════════════════════════════════════
+  // 6. TÍTULOS DE SECCIÓN — SPLIT POR PALABRAS
+  // ═══════════════════════════════════════
+  gsap.utils.toArray('.s-title').forEach(function(title) {
+    // Skip if already processed by Splitting (hero)
+    if (title.closest('#hero')) return;
+
+    var html = title.innerHTML;
+    // Wrap each word (text outside tags) in a span
+    var wrapped = html.replace(/([^\s<>]+)/g, function(match) {
+      // Don't wrap HTML tags
+      if (match.startsWith('<') || match.startsWith('/')) return match;
+      return '<span class="word">' + match + '</span>';
+    });
+    title.innerHTML = wrapped;
+
+    var words = title.querySelectorAll('.word');
+    if (words.length > 0) {
+      gsap.fromTo(words,
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 85%',
+            once: true
+          }
+        }
+      );
+    }
+  });
+
+  // ═══════════════════════════════════════
+  // 7. CONTADORES ANIMADOS — GSAP
+  // ═══════════════════════════════════════
+  gsap.utils.toArray('.stat-num[data-target]').forEach(function(el) {
+    var target = parseInt(el.dataset.target);
+    var suffix = el.dataset.suffix || '+';
+    var obj = { value: 0 };
+
+    gsap.to(obj, {
+      value: target,
+      duration: 1.5,
+      ease: 'power2.out',
+      onUpdate: function() {
+        el.textContent = Math.floor(obj.value) + suffix;
+      },
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 85%',
+        once: true
+      }
+    });
+  });
+
+  // ═══════════════════════════════════════
+  // 8. GALERÍA — SWIPER.JS
+  // ═══════════════════════════════════════
+  new Swiper('.gallery-swiper', {
+    slidesPerView: 1.3,
+    centeredSlides: true,
+    loop: true,
+    speed: 700,
+    spaceBetween: 16,
+    autoplay: {
+      delay: 3500,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true
+    },
+    breakpoints: {
+      700: {
+        slidesPerView: 2.5,
+        spaceBetween: 20
+      }
+    }
+  });
+
+  // ═══════════════════════════════════════
+  // 9. SPEAKER CARDS — HOVER CON GSAP
+  // ═══════════════════════════════════════
+  document.querySelectorAll('.speaker-card').forEach(function(card) {
+    var img = card.querySelector('.speaker-photo img');
+
+    card.addEventListener('mouseenter', function() {
+      gsap.to(card, { borderColor: '#C8A96E', duration: 0.3, ease: 'power2.out' });
+      if (img) gsap.to(img, { scale: 1.04, duration: 0.4, ease: 'power2.out' });
+    });
+
+    card.addEventListener('mouseleave', function() {
+      gsap.to(card, { borderColor: 'rgba(200,169,110,0.14)', duration: 0.3, ease: 'power2.out' });
+      if (img) gsap.to(img, { scale: 1, duration: 0.4, ease: 'power2.out' });
+    });
+  });
+
+  // ═══════════════════════════════════════
+  // 10. CURSOR PERSONALIZADO (solo desktop)
+  // ═══════════════════════════════════════
+  var cursor = document.getElementById('customCursor');
+  if (cursor && window.matchMedia('(hover: hover)').matches) {
+    var xTo = gsap.quickTo(cursor, 'x', { duration: 0.4, ease: 'power3' });
+    var yTo = gsap.quickTo(cursor, 'y', { duration: 0.4, ease: 'power3' });
+
+    window.addEventListener('mousemove', function(e) {
+      xTo(e.clientX);
+      yTo(e.clientY);
+    });
+
+    // Scale up on links and buttons
+    var interactives = document.querySelectorAll('a, button, .video-play-ui, .nav-cta, .price-btn');
+    interactives.forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        gsap.to(cursor, { scale: 2, duration: 0.25, ease: 'power2.out' });
+      });
+      el.addEventListener('mouseleave', function() {
+        gsap.to(cursor, { scale: 1, duration: 0.25, ease: 'power2.out' });
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════
+  // 11. SCROLL PROGRESS BAR
+  // ═══════════════════════════════════════
+  gsap.to('#scrollProgress', {
+    width: '100%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: document.documentElement,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.3
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

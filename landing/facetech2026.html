@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FACETECH 2026 — Congreso Internacional de Cirugía Facial Integrada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #06080d;
+  --navy: #0b0f1c;
+  --gold: #C8A96E;
+  --gold-light: #E4CC9A;
+  --gold-dim: #5c4a2a;
+  --cream: #EDE8DF;
+  --cream-dim: #9a9088;
+  --white: #ffffff;
+  --glass: rgba(255,255,255,0.03);
+  --gb: rgba(200,169,110,0.14);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+/* ─── ASSET PLACEHOLDER SYSTEM ─── */
+.asset-slot {
+  position: relative; overflow: hidden;
+  background: #0e1118;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; gap: 0.5rem;
+}
+.asset-slot::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 18px,
+    rgba(200,169,110,0.03) 18px, rgba(200,169,110,0.03) 19px
+  );
+}
+.asset-label {
+  position: relative; z-index: 1;
+  font-size: 0.52rem; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(200,169,110,0.1);
+  border: 1px solid rgba(200,169,110,0.3);
+  padding: 0.3rem 0.7rem;
+}
+.asset-desc {
+  position: relative; z-index: 1;
+  font-size: 0.66rem; color: var(--cream-dim);
+  max-width: 230px; line-height: 1.5;
+}
+.asset-icon { position: relative; z-index: 1; font-size: 1.8rem; opacity: 0.35; }
+.asset-num {
+  position: absolute; top: 0.6rem; right: 0.6rem;
+  font-size: 0.48rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(200,169,110,0.3);
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 300;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 1.5rem;
+  background: rgba(6,8,13,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: 0.22em; color: var(--gold);
+}
+.nav-cta {
+  background: var(--gold); color: var(--black);
+  font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.6rem 1.3rem; text-decoration: none;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: var(--gold-light); }
+
+/* ─── HERO ─── */
+#hero {
+  height: 100svh; min-height: 600px;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  position: relative; overflow: hidden;
+  padding: 0 1.5rem 2.5rem;
+}
+.hero-video-placeholder {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero-video-placeholder .asset-slot {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #0d121e 0%, #0a0f18 50%, #111720 100%);
+}
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(6,8,13,0.25) 0%, rgba(6,8,13,0.65) 50%, rgba(6,8,13,0.92) 80%, var(--black) 100%);
+}
+.hero-content { position: relative; z-index: 2; max-width: 520px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); border: 1px solid rgba(200,169,110,0.3);
+  padding: 0.38rem 0.75rem; margin-bottom: 1.2rem;
+  opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+}
+.hero-badge::before { content: '●'; font-size: 0.38rem; }
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 14vw, 6.5rem);
+  font-weight: 300; line-height: 0.88;
+  color: var(--white); margin-bottom: 0.6rem;
+  opacity: 0; animation: fadeUp 0.7s 0.35s forwards;
+}
+.hero-title strong { font-weight: 600; font-style: italic; color: var(--gold); }
+.hero-subtitle {
+  font-size: 0.72rem; font-weight: 400;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--cream-dim); margin-bottom: 1.4rem;
+  opacity: 0; animation: fadeUp 0.7s 0.45s forwards;
+}
+.hero-pillars {
+  display: flex; gap: 0; margin-bottom: 1.8rem;
+  opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
+}
+.hero-pillar {
+  font-size: 0.55rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold-light); padding: 0 0.9rem;
+  border-right: 1px solid var(--gold-dim);
+}
+.hero-pillar:first-child { padding-left: 0; }
+.hero-pillar:last-child { border-right: none; }
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-bottom: 2rem;
+  opacity: 0; animation: fadeUp 0.7s 0.6s forwards;
+}
+.hero-meta-item { font-size: 0.7rem; color: var(--cream-dim); }
+.hero-btn {
+  display: inline-block; text-decoration: none;
+  background: var(--gold); color: var(--black);
+  font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 1rem 2.5rem;
+  opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+  transition: background 0.2s;
+}
+.hero-btn:hover { background: var(--gold-light); }
+.hero-scroll {
+  position: absolute; bottom: 1.2rem; right: 1.5rem; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  opacity: 0; animation: fadeUp 0.7s 1.1s forwards;
+}
+.hero-scroll-line {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, transparent, var(--gold));
+  animation: scrollPulse 2s 1.5s ease-in-out infinite;
+}
+.hero-scroll span {
+  font-size: 0.48rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold-dim); writing-mode: vertical-rl;
+}
+
+/* ─── GENERIC SECTION ─── */
+.s { position: relative; z-index: 1; }
+.s-inner { max-width: 900px; margin: 0 auto; padding: 4.5rem 1.5rem; }
+.s-label {
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 0.7rem;
+}
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.2rem, 7vw, 3.8rem);
+  font-weight: 400; line-height: 1.05; color: var(--white);
+  margin-bottom: 0.9rem;
+}
+.s-title em { font-style: italic; color: var(--gold); }
+.divider {
+  width: 46px; height: 1px;
+  background: linear-gradient(to right, var(--gold), transparent);
+  margin-bottom: 1.4rem;
+}
+.s-body { font-size: 0.9rem; color: var(--cream-dim); line-height: 1.8; margin-bottom: 1rem; }
+.s-body strong { color: var(--cream); font-weight: 500; }
+
+/* ─── WELCOME VIDEO ─── */
+#welcome { background: var(--navy); }
+.welcome-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+.welcome-text { order: 2; }
+.welcome-video-wrap { order: 1; position: relative; }
+.welcome-video-slot { width: 100%; aspect-ratio: 16/9; }
+.welcome-video-slot .asset-slot { width: 100%; height: 100%; }
+.video-play-ui {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 0.8rem;
+  cursor: pointer;
+}
+.play-circle {
+  width: 60px; height: 60px; border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(200,169,110,0.1);
+  transition: all 0.3s;
+}
+.video-play-ui:hover .play-circle { background: rgba(200,169,110,0.22); transform: scale(1.06); }
+.play-tri {
+  width: 0; height: 0;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 16px solid var(--gold);
+  margin-left: 3px;
+}
+.video-play-ui span {
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-light);
+}
+.welcome-quote {
+  border-left: 2px solid var(--gold);
+  padding: 1.1rem 1.4rem; margin: 1.5rem 0;
+  background: rgba(200,169,110,0.04);
+}
+.welcome-quote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem; font-style: italic;
+  color: var(--cream); line-height: 1.5;
+}
+
+/* ─── GALLERY ─── */
+#gallery { background: var(--black); padding: 0; overflow: hidden; }
+.gallery-header { padding: 3.5rem 1.5rem 1.5rem; max-width: 900px; margin: 0 auto; }
+.gallery-track-wrap { overflow: hidden; }
+.gallery-track { display: flex; transition: transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+.gallery-slide {
+  min-width: 72vw; max-width: 260px;
+  aspect-ratio: 3/4;
+  margin-right: 1rem; flex-shrink: 0;
+  position: relative; overflow: hidden;
+}
+.gallery-slide .asset-slot { width: 100%; height: 100%; }
+.gallery-slide-cap {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  padding: 2rem 1rem 1rem;
+  background: linear-gradient(to top, rgba(6,8,13,0.88), transparent);
+  font-size: 0.68rem; color: var(--cream-dim); text-align: center;
+}
+.gallery-dots {
+  display: flex; justify-content: center; gap: 0.5rem; padding: 1.5rem;
+}
+.gdot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--gold-dim); cursor: pointer;
+  transition: all 0.3s; border: none;
+}
+.gdot.active { background: var(--gold); transform: scale(1.5); }
+
+/* ─── STATS ─── */
+#stats {
+  background: var(--black);
+  border-top: 1px solid rgba(200,169,110,0.08);
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+}
+.stats-grid {
+  display: grid; grid-template-columns: repeat(2,1fr);
+  max-width: 900px; margin: 0 auto;
+}
+.stat-item {
+  padding: 2.5rem 1rem; text-align: center;
+  border-right: 1px solid rgba(200,169,110,0.08);
+  border-bottom: 1px solid rgba(200,169,110,0.08);
+}
+.stat-item:nth-child(2n) { border-right: none; }
+.stat-item:nth-last-child(-n+2) { border-bottom: none; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem,8vw,4rem);
+  font-weight: 300; color: var(--gold); line-height: 1; margin-bottom: 0.4rem;
+}
+.stat-lbl {
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream-dim);
+}
+
+/* ─── WHY ─── */
+#why { background: var(--navy); }
+.why-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.55rem,5vw,2.4rem);
+  font-weight: 400; line-height: 1.35;
+  color: var(--white); margin-bottom: 2rem;
+}
+.why-quote strong { color: var(--gold); font-style: italic; }
+.why-items { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.5rem; }
+.why-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1.1rem; border: 1px solid var(--gb); background: var(--glass);
+}
+.why-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 300;
+  color: rgba(200,169,110,0.22); line-height: 1; flex-shrink: 0; min-width: 1.8rem;
+}
+.why-text { font-size: 0.86rem; color: var(--cream-dim); line-height: 1.65; }
+.why-text strong { color: var(--cream); font-weight: 500; }
+
+/* ─── AUDIENCE ─── */
+#audience { background: var(--black); }
+.audience-img-slot { width: 100%; aspect-ratio: 16/9; margin-bottom: 2rem; }
+.audience-img-slot .asset-slot { width: 100%; height: 100%; }
+.audience-items { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 1.5rem; }
+.audience-item {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  font-size: 0.86rem; color: var(--cream-dim); line-height: 1.65;
+  padding: 0.9rem; border-left: 2px solid var(--gold-dim);
+  background: rgba(200,169,110,0.02);
+}
+.audience-item strong { color: var(--cream); font-weight: 500; display: block; margin-bottom: 0.15rem; }
+.not-for {
+  margin-top: 2rem; padding: 1.1rem 1.4rem;
+  border: 1px solid rgba(200,169,110,0.09);
+}
+.not-for-title {
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--cream-dim); margin-bottom: 0.8rem;
+}
+.not-for-item {
+  font-size: 0.78rem; color: rgba(200,169,110,0.35);
+  padding: 0.28rem 0;
+  text-decoration: line-through; text-decoration-color: rgba(200,169,110,0.2);
+}
+
+/* ─── PROGRAM ─── */
+#program { background: var(--navy); }
+.program-days { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+.program-day { border: 1px solid var(--gb); overflow: hidden; }
+.program-day-img { width: 100%; aspect-ratio: 16/7; }
+.program-day-img .asset-slot { width: 100%; height: 100%; }
+.program-day-body { padding: 1.5rem; }
+.day-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.9rem; }
+.day-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 300; color: rgba(200,169,110,0.2); line-height: 1;
+}
+.day-tag {
+  font-size: 0.52rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  background: rgba(200,169,110,0.1); color: var(--gold);
+  border: 1px solid rgba(200,169,110,0.22); padding: 0.28rem 0.65rem;
+}
+.day-title-text { font-size: 0.88rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+.day-hours { font-size: 0.62rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.9rem; }
+.day-items { list-style: none; }
+.day-items li {
+  font-size: 0.8rem; color: var(--cream-dim);
+  padding: 0.38rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex; gap: 0.5rem; align-items: flex-start; line-height: 1.5;
+}
+.day-items li:last-child { border-bottom: none; }
+.day-items li::before { content: '—'; color: var(--gold-dim); flex-shrink: 0; }
+
+/* ─── SPEAKERS ─── */
+#speakers { background: var(--black); }
+.speakers-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+.speaker-card { border: 1px solid var(--gb); overflow: hidden; transition: border-color 0.3s; }
+.speaker-card:hover { border-color: var(--gold); }
+.speaker-photo { width: 100%; aspect-ratio: 1/1; max-height: 280px; position: relative; }
+.speaker-photo .asset-slot { width: 100%; height: 100%; }
+.speaker-photo-fade {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, var(--black) 0%, transparent 50%);
+}
+.speaker-body { padding: 1.4rem; }
+.speaker-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 600; color: var(--white); margin-bottom: 0.2rem;
+}
+.speaker-country {
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem;
+}
+.speaker-bio { font-size: 0.8rem; color: var(--cream-dim); line-height: 1.7; margin-bottom: 0.9rem; }
+.speaker-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.tag {
+  font-size: 0.52rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: 1px solid rgba(200,169,110,0.22);
+  color: var(--cream-dim); padding: 0.22rem 0.5rem;
+}
+
+/* ─── PRICING ─── */
+#pricing { background: var(--navy); }
+.pricing-note {
+  font-size: 0.84rem; color: var(--cream-dim); line-height: 1.75;
+  margin-bottom: 2rem; padding: 1.2rem 1.4rem;
+  border: 1px solid var(--gb); background: rgba(200,169,110,0.03);
+}
+.pricing-note strong { color: var(--gold); }
+.pricing-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+.price-card { border: 1px solid var(--gb); padding: 2rem 1.5rem; background: var(--glass); position: relative; }
+.price-card.featured { border-color: var(--gold); background: rgba(200,169,110,0.04); }
+.price-badge {
+  display: inline-block;
+  font-size: 0.5rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--gold); color: var(--black);
+  padding: 0.28rem 0.7rem; margin-bottom: 0.9rem;
+}
+.price-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 600; color: var(--white); line-height: 1.1; margin-bottom: 0.45rem;
+}
+.price-tagline { font-size: 0.78rem; color: var(--cream-dim); margin-bottom: 1.3rem; line-height: 1.5; }
+.price-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.8rem; font-weight: 300; color: var(--gold); line-height: 1;
+}
+.price-amount sup { font-size: 1.3rem; vertical-align: top; margin-top: 0.55rem; display: inline-block; }
+.price-currency { font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold-dim); margin-bottom: 1.4rem; }
+.price-features { list-style: none; margin-bottom: 1.8rem; }
+.price-features li {
+  display: flex; gap: 0.7rem; align-items: flex-start;
+  font-size: 0.82rem; color: var(--cream-dim);
+  padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); line-height: 1.5;
+}
+.price-features li:last-child { border-bottom: none; }
+.ck { color: var(--gold); flex-shrink: 0; font-size: 0.72rem; margin-top: 0.12rem; }
+.price-btn {
+  display: block; width: 100%; text-align: center;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 1rem; text-decoration: none;
+  transition: all 0.25s; cursor: pointer; border: none;
+}
+.btn-outline { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+.btn-outline:hover { background: var(--gold); color: var(--black); }
+.btn-solid { background: var(--gold); color: var(--black); }
+.btn-solid:hover { background: var(--gold-light); }
+
+/* ─── URGENCY ─── */
+#urgency { position: relative; overflow: hidden; }
+.urgency-bg { position: absolute; inset: 0; z-index: 0; }
+.urgency-bg .asset-slot { width: 100%; height: 100%; }
+.urgency-ov {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(6,8,13,0.97) 0%, rgba(6,8,13,0.85) 55%, rgba(6,8,13,0.65) 100%);
+}
+.urgency-content {
+  position: relative; z-index: 2;
+  max-width: 580px; margin: 0 auto;
+  padding: 5rem 1.5rem; text-align: center;
+}
+.urgency-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem,7vw,3.5rem);
+  font-weight: 400; color: var(--white);
+  line-height: 1.15; margin-bottom: 1rem;
+}
+.urgency-title em { font-style: italic; color: var(--gold); }
+.urgency-sub { font-size: 0.88rem; color: var(--cream-dim); line-height: 1.8; margin-bottom: 2.5rem; }
+.urgency-sub strong { color: var(--cream); font-weight: 500; }
+.urgency-cta {
+  display: inline-block; text-decoration: none;
+  background: var(--gold); color: var(--black);
+  font-size: 0.76rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 1.15rem 3rem; margin-bottom: 1rem;
+  transition: background 0.2s; width: 100%; max-width: 340px; text-align: center;
+}
+.urgency-cta:hover { background: var(--gold-light); }
+.urgency-note { font-size: 0.63rem; color: var(--cream-dim); letter-spacing: 0.07em; }
+.stripe-line {
+  display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+  font-size: 0.6rem; color: var(--cream-dim); margin-top: 1.2rem; opacity: 0.65;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--black);
+  border-top: 1px solid rgba(200,169,110,0.08);
+  padding: 2.5rem 1.5rem; text-align: center;
+}
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: 0.22em; color: var(--gold); margin-bottom: 0.8rem;
+}
+.footer-info { font-size: 0.7rem; color: var(--cream-dim); line-height: 1.9; margin-bottom: 0.8rem; }
+.footer-info a { color: var(--gold); text-decoration: none; }
+.footer-copy { font-size: 0.58rem; color: rgba(200,169,110,0.22); letter-spacing: 0.1em; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:1; transform:scaleY(1); }
+  50%     { opacity:0.3; transform:scaleY(0.55); }
+}
+.reveal {
+  opacity: 0; transform: translateY(22px);
+  transition: opacity 0.62s ease, transform 0.62s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ─── RESPONSIVE ─── */
+@media (min-width: 700px) {
+  .s-inner { padding: 6rem 2rem; }
+  .welcome-grid { grid-template-columns: 1fr 1fr; align-items: center; }
+  .welcome-text { order: 1; }
+  .welcome-video-wrap { order: 2; }
+  .stats-grid { grid-template-columns: repeat(4,1fr); }
+  .stat-item:nth-child(2n) { border-right: 1px solid rgba(200,169,110,0.08); }
+  .stat-item:nth-child(4n) { border-right: none; }
+  .stat-item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(200,169,110,0.08); }
+  .stat-item:last-child { border-bottom: none; }
+  .speakers-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+  .speaker-photo { aspect-ratio: 3/4; max-height: none; }
+  .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; }
+  .gallery-slide { min-width: 300px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">FACETECH</div>
+  <a href="#pricing" class="nav-cta">Inscribirse</a>
+</nav>
+
+<!-- ══════════════════════════════
+  HERO
+  ASSET #1 ▸ VIDEO DE FONDO (loop, muted, sin audio)
+  Tipo: reel quirúrgico 15-30s. Manos operando,
+  bisturí, instrumental, láser, quirófano.
+  Formato: .mp4 — reemplazar <source src="">
+══════════════════════════════ -->
+<section id="hero">
+  <div class="hero-video-placeholder">
+    <div class="asset-slot">
+      <span class="asset-num">ASSET #1</span>
+      <div class="asset-icon">🎬</div>
+      <span class="asset-label">VIDEO DE FONDO — HERO</span>
+      <p class="asset-desc">Loop 15-30s · Sin audio · Quirófano, bisturí, láser, manos operando. Oscuro y cinematográfico.</p>
+      <!-- VIDEO REAL:
+      <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <source src="assets/hero-bg.mp4" type="video/mp4">
+      </video> -->
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Congreso Internacional · Virtual · Iberoamérica</div>
+    <h1 class="hero-title">FACE<strong>TECH</strong><br>2026</h1>
+    <p class="hero-subtitle">Cirugía · Tecnología · Función — Un Solo Rostro</p>
+    <div class="hero-pillars">
+      <span class="hero-pillar">Cirugía</span>
+      <span class="hero-pillar">Tecnología</span>
+      <span class="hero-pillar">Función</span>
+    </div>
+    <div class="hero-meta">
+      <span class="hero-meta-item">📅 5 – 8 Agosto 2026</span>
+      <span class="hero-meta-item">🌐 100% Virtual</span>
+      <span class="hero-meta-item">🌎 Toda Iberoamérica</span>
+    </div>
+    <a href="#pricing" class="hero-btn">Ver Paquetes →</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  BIENVENIDA + VIDEO CON VOZ
+  ASSET #2 ▸ VIDEO BIENVENIDA (60-90s, con voz)
+  Los 3 doctores o Dr. Bareño hablando a cámara.
+  Directo, con convicción. Embed YouTube o .mp4.
+══════════════════════════════ -->
+<section id="welcome" class="s">
+  <div class="s-inner">
+    <div class="welcome-grid">
+      <div class="welcome-text reveal">
+        <p class="s-label">Bienvenida</p>
+        <h2 class="s-title">No asistes a clases.<br><em>Entiendes el criterio.</em></h2>
+        <div class="divider"></div>
+        <p class="s-body">FACETECH no es un congreso de técnicas aisladas. Es un espacio donde tres de los cirujanos faciales más rigurosos de iberoamérica te enseñan a pensar la cirugía facial como una unidad anatómica y funcional.</p>
+        <div class="welcome-quote">
+          <p>"La tecnología no reemplaza la cirugía. La eleva. Y la estética nunca se impone sobre la función."</p>
+        </div>
+        <p class="s-body"><strong>Cirugía real en vivo. Discusión abierta. Criterio quirúrgico sin filtros.</strong> Esto es FACETECH.</p>
+      </div>
+      <div class="welcome-video-wrap reveal">
+        <div class="welcome-video-slot">
+          <div class="asset-slot">
+            <span class="asset-num">ASSET #2</span>
+            <div class="asset-icon">🎙️</div>
+            <span class="asset-label">VIDEO BIENVENIDA CON VOZ</span>
+            <p class="asset-desc">60-90s · Los 3 doctores (o Bareño) a cámara. Directo y con convicción. YouTube embed o .mp4.</p>
+            <!-- YOUTUBE EMBED:
+            <iframe width="100%" style="aspect-ratio:16/9;border:none;position:absolute;inset:0;height:100%;"
+              src="https://www.youtube.com/embed/VIDEO_ID"
+              allowfullscreen></iframe> -->
+          </div>
+        </div>
+        <div class="video-play-ui">
+          <div class="play-circle"><div class="play-tri"></div></div>
+          <span>Ver mensaje de bienvenida</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  GALERÍA ROTANTE AUTOMÁTICA
+  ASSETS #3 al #7 — 5 fotos quirúrgicas
+  Cada una oscura, de alta calidad, dramática
+══════════════════════════════ -->
+<section id="gallery" class="s">
+  <div class="gallery-header reveal">
+    <p class="s-label">Lo que vivirás</p>
+    <h2 class="s-title">Alta <em>cirugía</em><br>en tiempo real</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="gallery-track-wrap">
+    <div class="gallery-track" id="galleryTrack">
+
+      <div class="gallery-slide"><!-- ASSET #3 -->
+        <div class="asset-slot">
+          <span class="asset-num">ASSET #3</span>
+          <div class="asset-icon">🔬</div>
+          <span class="asset-label">Cirugía en Vivo — Manos</span>
+          <p class="asset-desc">Plano cercano: manos del cirujano + instrumental. Muy atmosférico.</p>
+        </div>
+        <div class="gallery-slide-cap">Cirugía en vivo transmitida</div>
+      </div>
+
+      <div class="gallery-slide"><!-- ASSET #4 -->
+        <div class="asset-slot">
+          <span class="asset-num">ASSET #4</span>
+          <div class="asset-icon">👨‍⚕️</div>
+          <span class="asset-label">Ponente / Cátedra</span>
+          <p class="asset-desc">Doctor explicando con pantalla detrás. Ambiente académico de alto nivel.</p>
+        </div>
+        <div class="gallery-slide-cap">Teoría avanzada con criterio</div>
+      </div>
+
+      <div class="gallery-slide"><!-- ASSET #5 -->
+        <div class="asset-slot">
+          <span class="asset-num">ASSET #5</span>
+          <div class="asset-icon">📡</div>
+          <span class="asset-label">Sala / Pantalla Transmisión</span>
+          <p class="asset-desc">Sala quirúrgica con pantallas encendidas. Contexto de transmisión en vivo.</p>
+        </div>
+        <div class="gallery-slide-cap">Transmisión en tiempo real</div>
+      </div>
+
+      <div class="gallery-slide"><!-- ASSET #6 -->
+        <div class="asset-slot">
+          <span class="asset-num">ASSET #6</span>
+          <div class="asset-icon">👥</div>
+          <span class="asset-label">Médicos Observando</span>
+          <p class="asset-desc">Grupo de médicos observando un caso. Concentrados, uniforme quirúrgico.</p>
+        </div>
+        <div class="gallery-slide-cap">Discusión interdisciplinaria</div>
+      </div>
+
+      <div class="gallery-slide"><!-- ASSET #7 -->
+        <div class="asset-slot">
+          <span class="asset-num">ASSET #7</span>
+          <div class="asset-icon">⚡</div>
+          <span class="asset-label">Tecnología Láser / DEKA</span>
+          <p class="asset-desc">Equipo láser en uso. Luz azul/verde sobre tejido. Tecnológico y dramático.</p>
+        </div>
+        <div class="gallery-slide-cap">Tecnología integrada a la cirugía</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="gallery-dots" id="galleryDots">
+    <button class="gdot active" data-i="0"></button>
+    <button class="gdot" data-i="1"></button>
+    <button class="gdot" data-i="2"></button>
+    <button class="gdot" data-i="3"></button>
+    <button class="gdot" data-i="4"></button>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats" class="s">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="3">0</div>
+      <div class="stat-lbl">Especialidades integradas</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="14">0</div>
+      <div class="stat-lbl">Horas de teoría avanzada</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="8">0</div>
+      <div class="stat-lbl">Horas de cirugía en vivo</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num" data-target="100">0</div>
+      <div class="stat-lbl">% Virtual — desde cualquier país</div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ FACETECH -->
+<section id="why" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Filosofía</p>
+    <p class="why-quote reveal">"No puedes operar un párpado sin entender el tercio medio. No puedes hacer lifting sin <strong>entender la función."</strong></p>
+    <div class="divider reveal"></div>
+    <div class="why-items">
+      <div class="why-item reveal">
+        <div class="why-num">01</div>
+        <div class="why-text"><strong>Criterio quirúrgico, no técnica aislada.</strong> Te enseñamos cuándo indicar, por qué hacerlo y cómo integrarlo en un plan facial completo.</div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">02</div>
+        <div class="why-text"><strong>Cirugía real en vivo.</strong> No simulaciones. Procedimientos reales con discusión abierta de decisiones intraoperatorias, errores y complicaciones.</div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">03</div>
+        <div class="why-text"><strong>Tres especialidades. Un solo rostro.</strong> Oculoplástica, ORL y tecnología fotónica dialogando en el mismo espacio como deben dialogar.</div>
+      </div>
+      <div class="why-item reveal">
+        <div class="why-num">04</div>
+        <div class="why-text"><strong>Aplicable desde el día siguiente.</strong> Todo lo que verás tiene aplicabilidad clínica inmediata en tu práctica quirúrgica real.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  PARA QUIÉN
+  ASSET #8 ▸ FOTO MÉDICOS OBSERVANDO
+  Médicos en uniforme quirúrgico mirando
+  pantalla o caso en vivo. Plano medio.
+══════════════════════════════ -->
+<section id="audience" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Perfil del asistente</p>
+    <h2 class="s-title reveal">¿Para quién es<br><em>FACETECH?</em></h2>
+    <div class="divider reveal"></div>
+    <div class="audience-img-slot reveal">
+      <div class="asset-slot">
+        <span class="asset-num">ASSET #8</span>
+        <div class="asset-icon">👥</div>
+        <span class="asset-label">Médicos observando — Plano general</span>
+        <p class="asset-desc">Médicos con uniforme quirúrgico, concentrados, mirando pantalla o caso en vivo. Ambiente académico serio.</p>
+      </div>
+    </div>
+    <div class="audience-items">
+      <div class="audience-item reveal"><div><strong>Oftalmólogos / Oculoplásticos</strong>Que integran o quieren integrar el rejuvenecimiento facial global en su práctica.</div></div>
+      <div class="audience-item reveal"><div><strong>Cirujanos plásticos con enfoque facial</strong>Que buscan elevar su nivel técnico y conceptual más allá de las técnicas convencionales.</div></div>
+      <div class="audience-item reveal"><div><strong>Otorrinolaringólogos</strong>Con interés en cirugía facial, rinoplastia estructural, vía aérea y función nasal integrada.</div></div>
+      <div class="audience-item reveal"><div><strong>Cirujanos maxilofaciales</strong>Con perspectiva anatómica del tercio medio y superior del rostro.</div></div>
+    </div>
+    <div class="not-for reveal">
+      <div class="not-for-title">Este congreso NO es para</div>
+      <div class="not-for-item">Medicina estética no quirúrgica</div>
+      <div class="not-for-item">Técnicas aisladas de rellenos o procedimientos superficiales</div>
+      <div class="not-for-item">Abordajes exclusivamente dermatológicos</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  PROGRAMA
+  ASSET #9 ▸ DÍA 1 — Foto cátedra / teoría
+  ASSET #10 ▸ DÍA 2 — Cirugía ORL / nasal
+  ASSET #11 ▸ DÍA 3 — Blefaroplastia / lifting
+══════════════════════════════ -->
+<section id="program" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Programa académico</p>
+    <h2 class="s-title reveal">2.5 días de<br><em>alta intensidad</em></h2>
+    <div class="divider reveal"></div>
+    <p class="s-body reveal">14 horas de teoría avanzada + 8+ horas de cirugía en vivo. Diseñado para máxima retención y aplicabilidad clínica inmediata.</p>
+    <div class="program-days">
+
+      <div class="program-day reveal">
+        <div class="program-day-img">
+          <div class="asset-slot">
+            <span class="asset-num">ASSET #9</span>
+            <div class="asset-icon">📚</div>
+            <span class="asset-label">Día 1 — Cátedra / Teoría</span>
+            <p class="asset-desc">Doctor frente a pantalla o pizarrón. Ambiente académico oscuro. Plano medio-general.</p>
+          </div>
+        </div>
+        <div class="program-day-body">
+          <div class="day-header">
+            <div class="day-num">01</div>
+            <span class="day-tag">08:00 – 17:30 · 9h</span>
+          </div>
+          <div class="day-title-text">Teoría Avanzada</div>
+          <div class="day-hours">Día completo · Alta intensidad conceptual</div>
+          <ul class="day-items">
+            <li>Análisis integral del envejecimiento facial</li>
+            <li>Relación párpados, tercio medio y función</li>
+            <li>Principios del lifting facial moderno</li>
+            <li>Integración racional de tecnología en cirugía</li>
+            <li>Función nasal, vía aérea y armonía facial</li>
+            <li>Casos clínicos integrados e interdisciplinarios</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="program-day reveal">
+        <div class="program-day-img">
+          <div class="asset-slot">
+            <span class="asset-num">ASSET #10</span>
+            <div class="asset-icon">👃</div>
+            <span class="asset-label">Día 2 — Cirugía ORL / Nasal</span>
+            <p class="asset-desc">Rinoplastia en proceso. Instrumental ultrasónico si posible. Plano quirúrgico cercano.</p>
+          </div>
+        </div>
+        <div class="program-day-body">
+          <div class="day-header">
+            <div class="day-num">02</div>
+            <span class="day-tag">Mañana + Tarde</span>
+          </div>
+          <div class="day-title-text">Teoría (am) + Cirugía ORL en Vivo (pm)</div>
+          <div class="day-hours">08:00–13:00 teoría · 14:00–18:00 cirugía en vivo</div>
+          <ul class="day-items">
+            <li>Teoría de preparación quirúrgica — 5 horas</li>
+            <li>Cirugía ORL en vivo: nariz, estructura, vía aérea</li>
+            <li>Rinoplastia estructural y ultrasónica comentada</li>
+            <li>Discusión abierta de indicaciones y complicaciones</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="program-day reveal">
+        <div class="program-day-img">
+          <div class="asset-slot">
+            <span class="asset-num">ASSET #11</span>
+            <div class="asset-icon">👁</div>
+            <span class="asset-label">Día 3 — Blefaroplastia / Lifting</span>
+            <p class="asset-desc">Cirugía de párpados o lifting endoscópico. Luz del láser visible si posible. Muy atmosférico.</p>
+          </div>
+        </div>
+        <div class="program-day-body">
+          <div class="day-header">
+            <div class="day-num">03</div>
+            <span class="day-tag">08:00 – 13:00 · 5h cirugía</span>
+          </div>
+          <div class="day-title-text">Cirugía Oculoplástica + Lifting Endoscópico</div>
+          <div class="day-hours">4.5 – 5 horas de cirugía transmitida en vivo</div>
+          <ul class="day-items">
+            <li>Blefaroplastia en vivo con tecnología láser integrada</li>
+            <li>Lifting endoscópico facial — tercio medio y superior</li>
+            <li>Análisis de decisiones intraoperatorias en tiempo real</li>
+            <li>Preguntas abiertas durante la cirugía</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  PONENTES
+  ASSET #12 ▸ Foto Dr. John Bareño
+  ASSET #13 ▸ Foto Dr. Froilán Páez
+  ASSET #14 ▸ Foto Dr. Daniel Páez
+  Fotos profesionales. Fondo neutro oscuro o
+  quirúrgico. Cuadrada o vertical. Buena iluminación.
+══════════════════════════════ -->
+<section id="speakers" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Liderazgo académico</p>
+    <h2 class="s-title reveal">Los <em>cirujanos</em><br>detrás de FACETECH</h2>
+    <div class="divider reveal"></div>
+    <div class="speakers-list">
+
+      <div class="speaker-card reveal">
+        <div class="speaker-photo">
+          <div class="asset-slot">
+            <span class="asset-num">ASSET #12</span>
+            <div class="asset-icon">📸</div>
+            <span class="asset-label">Foto Dr. John Bareño</span>
+            <p class="asset-desc">Foto profesional. Fondo neutro oscuro o quirúrgico. Traje o bata. Iluminación limpia.</p>
+          </div>
+          <div class="speaker-photo-fade"></div>
+        </div>
+        <div class="speaker-body">
+          <div class="speaker-name">Dr. John Bareño</div>
+          <div class="speaker-country">🇨🇴 Colombia</div>
+          <p class="speaker-bio">Médico Oftalmólogo. Supraespecialista en Oculoplástica. Vicepresidente de la Asociación Colombiana de Cirugía Plástica Ocular. Miembro de SOLAFACE. Formación avanzada en Hospital Quinze-Vingt, París. Conferencista internacional en rejuvenecimiento y cirugía estética facial.</p>
+          <div class="speaker-tags">
+            <span class="tag">Oculoplástica</span>
+            <span class="tag">Lifting Endoscópico</span>
+            <span class="tag">Rejuvenecimiento</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="speaker-card reveal">
+        <div class="speaker-photo">
+          <div class="asset-slot">
+            <span class="asset-num">ASSET #13</span>
+            <div class="asset-icon">📸</div>
+            <span class="asset-label">Foto Dr. Froilán Páez</span>
+            <p class="asset-desc">Mismo estilo que Bareño. Fondo neutro oscuro. Postura segura. Iluminación limpia.</p>
+          </div>
+          <div class="speaker-photo-fade"></div>
+        </div>
+        <div class="speaker-body">
+          <div class="speaker-name">Dr. Froilán Páez</div>
+          <div class="speaker-country">🇻🇪 Venezuela</div>
+          <p class="speaker-bio">Otorrinolaringólogo especialista en Cirugía Facial. Egresado Universidad Central de Venezuela. Visiting Fellow en Oregon Health & Science University, EE.UU. +15 años de experiencia. 600+ cirugías anuales. Conferencista en Madrid, Chile, Australia y Ecuador. Referente iberoamericano en rinoplastia ultrasónica.</p>
+          <div class="speaker-tags">
+            <span class="tag">Rinoplastia Ultrasónica</span>
+            <span class="tag">Cirugía Nasal</span>
+            <span class="tag">Vía Aérea</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="speaker-card reveal">
+        <div class="speaker-photo">
+          <div class="asset-slot">
+            <span class="asset-num">ASSET #14</span>
+            <div class="asset-icon">📸</div>
+            <span class="asset-label">Foto Dr. Daniel Páez</span>
+            <p class="asset-desc">Mismo estilo que los demás. Fondo neutro oscuro. Postura segura y profesional.</p>
+          </div>
+          <div class="speaker-photo-fade"></div>
+        </div>
+        <div class="speaker-body">
+          <div class="speaker-name">Dr. Daniel Páez</div>
+          <div class="speaker-country">🇻🇪 Venezuela</div>
+          <p class="speaker-bio">Oftalmólogo Oculoplástico. Especialista en Cirugía Plástica Oculofacial, Medicina Estética Avanzada y Medicina Fotónica. Experto en la integración racional de tecnologías láser y dispositivos de energía como herramienta complementaria y potenciadora de la cirugía facial.</p>
+          <div class="speaker-tags">
+            <span class="tag">Blefaroplastia</span>
+            <span class="tag">Medicina Fotónica</span>
+            <span class="tag">Láser</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="s">
+  <div class="s-inner">
+    <p class="s-label reveal">Inversión</p>
+    <h2 class="s-title reveal">Elige tu<br><em>experiencia</em></h2>
+    <div class="divider reveal"></div>
+    <div class="pricing-note reveal">
+      Todos los paquetes incluyen el <strong>CORE FACETECH completo</strong> — 14 horas de teoría avanzada y certificación oficial. La diferencia está en el acceso a los módulos quirúrgicos en vivo.
+    </div>
+    <div class="pricing-cards">
+      <div class="price-card reveal">
+        <div class="price-name">FACETECH<br>+ Medio Día</div>
+        <p class="price-tagline">Teoría completa más un módulo quirúrgico a tu elección.</p>
+        <div class="price-amount"><sup>$</sup>2,500</div>
+        <div class="price-currency">USD · Pago único</div>
+        <ul class="price-features">
+          <li><span class="ck">✦</span>14 horas de teoría avanzada (Días 1 y 2 am)</li>
+          <li><span class="ck">✦</span>Certificación oficial FACETECH</li>
+          <li><span class="ck">✦</span>Elección de UN módulo quirúrgico:<br><small style="color:var(--gold-dim);padding-left:0.3rem;">Cirugía ORL ó Oculoplástica + Lifting</small></li>
+        </ul>
+        <a href="#" class="price-btn btn-outline">Inscribirse en este paquete
+          <!-- Reemplazar href con Payment Link de Stripe -->
+        </a>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-badge">Más completo</div>
+        <div class="price-name">FULL FACE<br>Experience</div>
+        <p class="price-tagline">La experiencia FACETECH completa. Todo incluido.</p>
+        <div class="price-amount"><sup>$</sup>3,000</div>
+        <div class="price-currency">USD · Pago único</div>
+        <ul class="price-features">
+          <li><span class="ck">✦</span>14 horas de teoría avanzada (Días 1 y 2 am)</li>
+          <li><span class="ck">✦</span>Cirugía ORL en vivo — Día 2 tarde</li>
+          <li><span class="ck">✦</span>Oculoplástica + Lifting endoscópico — Día 3</li>
+          <li><span class="ck">✦</span>Asientos preferenciales en transmisión</li>
+          <li><span class="ck">✦</span>Acceso a grabaciones quirúrgicas</li>
+          <li><span class="ck">✦</span>Certificación Full Face FACETECH</li>
+        </ul>
+        <a href="#" class="price-btn btn-solid">Inscribirse — Full Face
+          <!-- Reemplazar href con Payment Link de Stripe -->
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+  URGENCIA / CTA FINAL
+  ASSET #15 ▸ FOTO ATMOSFÉRICA DE CIERRE
+  Cirujano en quirófano, muy oscura e impactante.
+  Sirve de fondo con overlay encima.
+══════════════════════════════ -->
+<section id="urgency" class="s">
+  <div class="urgency-bg">
+    <div class="asset-slot">
+      <span class="asset-num">ASSET #15</span>
+      <div class="asset-icon">🔥</div>
+      <span class="asset-label">Foto de Cierre — Atmosférica</span>
+      <p class="asset-desc">Imagen muy oscura e impactante. Cirujano en quirófano, plano dramático. Va detrás con overlay oscuro.</p>
+    </div>
+  </div>
+  <div class="urgency-ov"></div>
+  <div class="urgency-content">
+    <p class="s-label">Cupos limitados</p>
+    <h2 class="urgency-title reveal">Asegura tu<br>lugar en<br><em>FACETECH</em></h2>
+    <p class="urgency-sub reveal">El congreso es <strong>100% virtual</strong> — accedes desde cualquier país de iberoamérica. Los cupos son limitados para mantener la calidad académica. Pago seguro en USD vía Stripe.</p>
+    <a href="#pricing" class="urgency-cta reveal">Ver paquetes e inscribirse</a>
+    <p class="urgency-note reveal">5 – 8 de agosto de 2026 · Virtual · Iberoamérica</p>
+    <div class="stripe-line reveal">🔒 Pagos procesados con Stripe · SSL encriptado · USD</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">FACETECH 2026</div>
+  <div class="footer-info">
+    Congreso Internacional de Cirugía Facial Integrada<br>
+    5 – 8 de agosto de 2026 · 100% Virtual · Iberoamérica<br>
+    <a href="mailto:info@facetech2026.com">info@facetech2026.com</a>
+    <!-- Cambiar por email real -->
+  </div>
+  <div class="footer-copy">© 2026 FACETECH · Cirugía · Tecnología · Función · Un Solo Rostro</div>
+</footer>
+
+<script>
+// ── REVEAL ON SCROLL ──
+const ro = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 55);
+      ro.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -35px 0px' });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+// ── STATS COUNTER ──
+const sc = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const el = e.target;
+    const target = parseInt(el.dataset.target);
+    let val = 0; const step = target / 38;
+    const t = setInterval(() => {
+      val = Math.min(val + step, target);
+      el.textContent = Math.floor(val) + (target === 100 ? '%' : '+');
+      if (val >= target) clearInterval(t);
+    }, 35);
+    sc.unobserve(el);
+  });
+}, { threshold: 0.5 });
+document.querySelectorAll('.stat-num[data-target]').forEach(el => sc.observe(el));
+
+// ── GALLERY ROTANTE ──
+const track = document.getElementById('galleryTrack');
+const slides = track.querySelectorAll('.gallery-slide');
+const dots = document.querySelectorAll('.gdot');
+let cur = 0, timer;
+
+function slideW() {
+  return slides[0].offsetWidth + parseInt(getComputedStyle(slides[0]).marginRight);
+}
+function goTo(idx) {
+  cur = ((idx % slides.length) + slides.length) % slides.length;
+  track.style.transform = `translateX(-${cur * slideW()}px)`;
+  dots.forEach((d, i) => d.classList.toggle('active', i === cur));
+}
+function startAuto() { timer = setInterval(() => goTo(cur + 1), 3200); }
+function stopAuto()  { clearInterval(timer); }
+
+dots.forEach(d => {
+  d.addEventListener('click', () => { stopAuto(); goTo(+d.dataset.i); startAuto(); });
+});
+let tx = 0;
+track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; stopAuto(); });
+track.addEventListener('touchend',   e => {
+  const dx = tx - e.changedTouches[0].clientX;
+  if (Math.abs(dx) > 40) goTo(dx > 0 ? cur + 1 : cur - 1);
+  startAuto();
+});
+window.addEventListener('resize', () => goTo(cur));
+startAuto();
+</script>
+</body>
+</html>
