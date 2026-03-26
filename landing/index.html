@@ -599,12 +599,13 @@ nav {
 .modal-overlay {
   position: fixed; inset: 0; z-index: 9000;
   background: rgba(0,0,0,0.85);
-  display: none; align-items: center; justify-content: center;
-  padding: 1rem;
+  display: none;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 2rem 1rem;
   opacity: 0;
 }
-.modal-overlay.is-open { display: flex; }
+.modal-overlay.is-open { display: flex; align-items: flex-start; justify-content: center; }
 .modal-box {
   width: 100%; max-width: 540px;
   background: var(--navy);
@@ -612,8 +613,8 @@ nav {
   padding: 2.5rem;
   border-radius: 2px;
   position: relative;
-  max-height: 90vh;
-  overflow-y: auto;
+  margin: auto;
+  flex-shrink: 0;
   transform: translateY(20px);
 }
 .modal-close {
@@ -1825,12 +1826,13 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-    if (typeof lenis !== 'undefined') lenis.stop();
+    if (typeof lenis !== 'undefined') lenis.destroy();
 
     // GSAP entrance
     gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
     gsap.fromTo(modalBox, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out', delay: 0.05 });
+    // Scroll modal to top
+    modal.scrollTop = 0;
   }
 
   function closeModal() {
@@ -1839,8 +1841,15 @@ window.addEventListener('DOMContentLoaded', function() {
       opacity: 0, duration: 0.3, ease: 'power2.in', delay: 0.05,
       onComplete: function() {
         modal.classList.remove('is-open');
-        document.body.style.overflow = '';
-        if (typeof lenis !== 'undefined') lenis.start();
+        // Reinitialize Lenis
+        lenis = new Lenis({
+          duration: 1.2,
+          easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+          orientation: 'vertical',
+          smoothWheel: true
+        });
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(function(time) { lenis.raf(time * 1000); });
       }
     });
   }
