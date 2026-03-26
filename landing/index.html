@@ -42,6 +42,69 @@ body {
 }
 h1, h2, h3 { overflow-wrap: break-word; word-break: break-word; }
 
+/* ─── VIDEO INTRO OVERLAY ─── */
+.video-intro {
+  position: fixed; inset: 0; z-index: 99999;
+  background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column;
+}
+.video-intro video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  position: absolute; inset: 0;
+}
+.video-intro-controls {
+  position: absolute; bottom: 2.5rem; right: 2rem; z-index: 2;
+  display: flex; align-items: center; gap: 1rem;
+}
+.intro-skip {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(200,169,110,0.3);
+  color: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.intro-skip:hover {
+  background: rgba(200,169,110,0.15);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.intro-sound {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(200,169,110,0.3);
+  color: var(--gold);
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.intro-sound:hover {
+  background: rgba(200,169,110,0.15);
+  border-color: var(--gold);
+}
+.intro-sound svg { width: 18px; height: 18px; fill: currentColor; }
+.intro-progress {
+  position: absolute; bottom: 0; left: 0; z-index: 2;
+  height: 3px; background: var(--gold);
+  width: 0%;
+  transition: none;
+}
+.video-intro-logo {
+  position: absolute; top: 2rem; left: 2rem; z-index: 2;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem; font-weight: 700;
+  letter-spacing: 0.22em; color: var(--gold);
+  opacity: 0.7;
+}
+body.intro-active { overflow: hidden; }
+
 /* ─── SCROLL PROGRESS BAR ─── */
 .scroll-progress {
   position: fixed; top: 0; left: 0; z-index: 9999;
@@ -723,7 +786,24 @@ nav.nav-hidden { transform: translateY(-100%); }
 }
 </style>
 </head>
-<body>
+<body class="intro-active">
+
+<!-- ══════════════════════════════
+  VIDEO INTRO — Fullscreen, plays once, then reveals page
+══════════════════════════════ -->
+<div class="video-intro" id="videoIntro">
+  <div class="video-intro-logo">FACETECH</div>
+  <video id="introVideo" playsinline preload="auto" poster="../fotos/foto-10.jpg">
+    <source src="../videos/video-hero.mov" type="video/mp4">
+  </video>
+  <div class="intro-progress" id="introProgress"></div>
+  <div class="video-intro-controls">
+    <button class="intro-sound" id="introSoundBtn" aria-label="Activar sonido">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/></svg>
+    </button>
+    <button class="intro-skip" id="introSkip">Saltar intro &rarr;</button>
+  </div>
+</div>
 
 <!-- SCROLL PROGRESS BAR -->
 <div class="scroll-progress" id="scrollProgress"></div>
@@ -744,7 +824,7 @@ nav.nav-hidden { transform: translateY(-100%); }
 ══════════════════════════════ -->
 <section id="hero">
   <div class="hero-video-wrap" id="heroVideoWrap">
-    <video autoplay muted loop playsinline poster="../fotos/foto-10.jpg" id="heroVideo" fetchpriority="high">
+    <video muted loop playsinline poster="../fotos/foto-10.jpg" id="heroVideo">
       <source src="../videos/video-hero.mov" type="video/mp4">
       <!-- TODO: Convertir #1 VIDEO_.mov a .mp4 (H.264) para máxima compatibilidad. Mientras tanto, el hero muestra la foto #10 como background-image CSS de fallback. -->
     </video>
@@ -1289,6 +1369,74 @@ window.addEventListener('DOMContentLoaded', function() {
   gsap.registerPlugin(ScrollTrigger);
 
   // ═══════════════════════════════════════
+  // 0b. VIDEO INTRO
+  // ═══════════════════════════════════════
+  var introOverlay = document.getElementById('videoIntro');
+  var introVideo = document.getElementById('introVideo');
+  var introSkipBtn = document.getElementById('introSkip');
+  var introSoundBtn = document.getElementById('introSoundBtn');
+  var introProgress = document.getElementById('introProgress');
+  var introEnded = false;
+
+  function endIntro() {
+    if (introEnded) return;
+    introEnded = true;
+    if (introVideo) { introVideo.pause(); introVideo.muted = true; }
+    gsap.to(introOverlay, {
+      opacity: 0, duration: 0.8, ease: 'power2.inOut',
+      onComplete: function() {
+        introOverlay.style.display = 'none';
+        document.body.classList.remove('intro-active');
+        // Start hero background video loop
+        var hv = document.getElementById('heroVideo');
+        if (hv) { hv.play().catch(function(){}); }
+        // Trigger hero entrance animation
+        heroTl.play();
+        window.dispatchEvent(new Event('resize'));
+        ScrollTrigger.refresh();
+      }
+    });
+  }
+
+  if (introVideo) {
+    // Try autoplay
+    introVideo.muted = true;
+    introVideo.play().catch(function() {});
+
+    // Progress bar
+    introVideo.addEventListener('timeupdate', function() {
+      if (introVideo.duration) {
+        var pct = (introVideo.currentTime / introVideo.duration) * 100;
+        introProgress.style.width = pct + '%';
+      }
+    });
+
+    // Video ends → reveal page
+    introVideo.addEventListener('ended', endIntro);
+
+    // Sound toggle
+    introSoundBtn.addEventListener('click', function() {
+      if (introVideo.muted) {
+        introVideo.muted = false;
+        introSoundBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>';
+      } else {
+        introVideo.muted = true;
+        introSoundBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/></svg>';
+      }
+    });
+  }
+
+  // Skip button
+  introSkipBtn.addEventListener('click', endIntro);
+
+  // Fallback: if video fails to load, skip after 3s
+  setTimeout(function() {
+    if (!introEnded && introVideo && (introVideo.readyState < 2 || introVideo.paused)) {
+      endIntro();
+    }
+  }, 3000);
+
+  // ═══════════════════════════════════════
   // 1. LENIS — SMOOTH SCROLL
   // ═══════════════════════════════════════
   var lenis = new Lenis({
@@ -1313,7 +1461,7 @@ window.addEventListener('DOMContentLoaded', function() {
   // ═══════════════════════════════════════
   // 3. HERO — ENTRADA CINEMATOGRÁFICA
   // ═══════════════════════════════════════
-  var heroTl = gsap.timeline({ delay: 0.3 });
+  var heroTl = gsap.timeline({ delay: 0.3, paused: true });
 
   // Título letra por letra
   var heroChars = document.querySelectorAll('.hero-title .char');
