@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FACETECH 2026 — Congreso Internacional de Cirugía Facial Integrada</title>
-<meta name="description" content="FACETECH 2026 — Congreso Internacional de Cirugía Facial Integrada. 5-8 agosto 2026. 100% virtual. Cirugía en vivo, teoría avanzada, 3 especialidades. Desde USD 2,500.">
+<meta name="description" content="FACETECH 2026 — Congreso Internacional de Cirugía Facial Integrada. 5-8 agosto 2026. Presencial. Cirugía en vivo, teoría avanzada, 3 especialidades. Desde USD 2,500.">
 <meta property="og:title" content="FACETECH 2026 — Cirugía · Tecnología · Función">
-<meta property="og:description" content="Congreso internacional de cirugía facial integrada. Virtual, iberoamérica, agosto 2026.">
+<meta property="og:description" content="Congreso internacional de cirugía facial integrada. Presencial, iberoamérica, agosto 2026.">
 <meta property="og:image" content="../fotos/foto-15.jpg">
 <meta name="theme-color" content="#06080d">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -679,6 +679,49 @@ footer {
   0%,100% { opacity:1; transform:scaleY(1); }
   50%     { opacity:0.3; transform:scaleY(0.55); }
 }
+@keyframes goldPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(200,169,110,0); }
+  50%     { box-shadow: 0 0 24px 4px rgba(200,169,110,0.18); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* ─── GOLD GLOW on CTA buttons ─── */
+.hero-btn,
+.urgency-cta,
+.nav-cta { animation: goldPulse 3s 2s ease-in-out infinite; }
+
+/* ─── HERO TITLE SHIMMER ─── */
+.hero-title.shimmer-active {
+  background: linear-gradient(
+    90deg, var(--white) 0%, var(--white) 35%,
+    var(--gold-light) 50%, var(--white) 65%, var(--white) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s 2.5s ease-in-out 1;
+}
+.hero-title.shimmer-active strong {
+  -webkit-text-fill-color: var(--gold);
+}
+
+/* ─── PARALLAX IMAGE CONTAINERS ─── */
+.parallax-img { overflow: hidden; }
+.parallax-img img { transition: none; will-change: transform; }
+
+/* ─── STAGGER CHILDREN ���── */
+.stagger-child { opacity: 0; transform: translateY(20px); }
+
+/* ─── DIVIDER GROW ─── */
+.divider { transform-origin: left; transform: scaleX(0); }
+
+/* ─── NAV HIDE/SHOW ON SCROLL ─── */
+nav { transition: transform 0.35s ease; }
+nav.nav-hidden { transform: translateY(-100%); }
 
 /* ─── REVEAL (initial state for GSAP) ─── */
 .reveal { opacity: 0; transform: translateY(30px); }
@@ -733,7 +776,7 @@ footer {
     <span id="soundLabel">Activar sonido</span>
   </button>
   <div class="hero-content">
-    <div class="hero-badge" id="heroBadge">Congreso Internacional &middot; Virtual &middot; Iberoam&eacute;rica</div>
+    <div class="hero-badge" id="heroBadge">Congreso Internacional &middot; Presencial &middot; Iberoam&eacute;rica</div>
     <h1 class="hero-title" data-splitting>FACE<strong>TECH</strong> 2026</h1>
     <p class="hero-subtitle" id="heroSubtitle">Cirug&iacute;a &middot; Tecnolog&iacute;a &middot; Funci&oacute;n &mdash; Un Solo Rostro</p>
     <div class="hero-pillars" id="heroPillars">
@@ -743,7 +786,7 @@ footer {
     </div>
     <div class="hero-meta" id="heroMeta">
       <span class="hero-meta-item">5 &ndash; 8 Agosto 2026</span>
-      <span class="hero-meta-item">100% Virtual</span>
+      <span class="hero-meta-item">Presencial</span>
       <span class="hero-meta-item">Toda Iberoam&eacute;rica</span>
     </div>
     <a href="#pricing" class="hero-btn" id="heroBtn">Ver Paquetes &rarr;</a>
@@ -866,8 +909,8 @@ footer {
       <div class="stat-lbl">Horas de cirug&iacute;a en vivo</div>
     </div>
     <div class="stat-item reveal">
-      <div class="stat-num" data-target="100" data-suffix="%">0</div>
-      <div class="stat-lbl">Virtual &mdash; desde cualquier pa&iacute;s</div>
+      <div class="stat-num" data-target="4" data-suffix="">0</div>
+      <div class="stat-lbl">D&iacute;as de experiencia presencial</div>
     </div>
   </div>
 </section>
@@ -1133,9 +1176,9 @@ footer {
   <div class="urgency-content">
     <p class="s-label">Cupos limitados</p>
     <h2 class="urgency-title reveal">Asegura tu<br>lugar en<br><em>FACETECH</em></h2>
-    <p class="urgency-sub reveal">El congreso es <strong>100% virtual</strong> &mdash; accedes desde cualquier pa&iacute;s de iberoam&eacute;rica. Los cupos son limitados para mantener la calidad acad&eacute;mica.</p>
+    <p class="urgency-sub reveal">El congreso es <strong>100% presencial</strong> &mdash; una experiencia acad&eacute;mica inmersiva e irrepetible. Los cupos son limitados para mantener la calidad acad&eacute;mica. Inscripci&oacute;n y pago 100% en l&iacute;nea.</p>
     <a href="#pricing" class="urgency-cta reveal">Ver paquetes e inscribirse</a>
-    <p class="urgency-note reveal">5 &ndash; 8 de agosto de 2026 &middot; Virtual &middot; Iberoam&eacute;rica</p>
+    <p class="urgency-note reveal">5 &ndash; 8 de agosto de 2026 &middot; Presencial &middot; Iberoam&eacute;rica</p>
   </div>
 </section>
 
@@ -1148,9 +1191,10 @@ footer {
     <div class="modal-title">Reserva tu lugar</div>
     <p class="modal-subtitle">Completa el formulario y nos pondremos en contacto contigo para finalizar tu inscripci&oacute;n.</p>
 
-    <!-- Formulario Formspree — reemplazar XXXXXXXX con tu ID real de Formspree -->
-    <form id="contactForm" action="https://formspree.io/f/XXXXXXXX" method="POST">
+    <form id="contactForm" action="https://formsubmit.co/info@facetech2026.com" method="POST">
       <input type="hidden" name="_subject" value="Nueva inscripción FACETECH 2026">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
 
       <div class="form-group">
         <label class="form-label" for="fld-name">Nombre Completo *</label>
@@ -1239,9 +1283,8 @@ footer {
   <div class="footer-logo">FACETECH 2026</div>
   <div class="footer-info">
     Congreso Internacional de Cirug&iacute;a Facial Integrada<br>
-    5 &ndash; 8 de agosto de 2026 &middot; 100% Virtual &middot; Iberoam&eacute;rica<br>
+    5 &ndash; 8 de agosto de 2026 &middot; Presencial &middot; Iberoam&eacute;rica<br>
     <a href="mailto:info@facetech2026.com">info@facetech2026.com</a>
-    <!-- TODO: Cambiar por email real del congreso -->
   </div>
   <div class="footer-copy">&copy; 2026 FACETECH &middot; Cirug&iacute;a &middot; Tecnolog&iacute;a &middot; Funci&oacute;n &middot; Un Solo Rostro</div>
 </footer>
@@ -1549,7 +1592,100 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   // ═══════════════════════════════════════
-  // 12. CONTACT MODAL
+  // 12. HERO TITLE SHIMMER — fires once after hero entrance
+  // ═══════════════════════════════════════
+  var heroTitle = document.querySelector('.hero-title');
+  if (heroTitle) {
+    heroTl.call(function() { heroTitle.classList.add('shimmer-active'); }, null, 1.6);
+  }
+
+  // ═══════════════════════════════════════
+  // 13. PARALLAX on section images (audience, program, gallery)
+  // ═══════════════════════════════════════
+  document.querySelectorAll('.audience-img-slot, .program-day-img, .gallery-slide').forEach(function(wrap) {
+    wrap.classList.add('parallax-img');
+    var img = wrap.querySelector('img');
+    if (!img) return;
+    gsap.fromTo(img,
+      { yPercent: -8, scale: 1.12 },
+      {
+        yPercent: 8, scale: 1.12,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: wrap,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true
+        }
+      }
+    );
+  });
+
+  // ═══════════════════════════════════════
+  // 14. DIVIDERS — grow from left on scroll
+  // ═══════════════════════════════════════
+  gsap.utils.toArray('.divider').forEach(function(el) {
+    gsap.to(el, {
+      scaleX: 1, duration: 0.8, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true }
+    });
+  });
+
+  // ═══════════════════════════════════════
+  // 15. STAGGERED LIST ITEMS — audience, why, program, price features
+  // ═══════════════════════════════════════
+  ['.audience-items', '.why-items', '.price-features'].forEach(function(parentSel) {
+    document.querySelectorAll(parentSel).forEach(function(parent) {
+      var children = parent.children;
+      for (var i = 0; i < children.length; i++) {
+        children[i].classList.add('stagger-child');
+      }
+      gsap.to(parent.querySelectorAll('.stagger-child'), {
+        opacity: 1, y: 0, duration: 0.6, stagger: 0.12, ease: 'power2.out',
+        scrollTrigger: { trigger: parent, start: 'top 80%', once: true }
+      });
+    });
+  });
+
+  // ═══════════════════════════════════════
+  // 16. NAV hide on scroll down, show on scroll up
+  // ═══════════════════════════════════════
+  var navEl = document.querySelector('nav');
+  var lastScrollY = 0;
+  ScrollTrigger.create({
+    trigger: document.body,
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate: function(self) {
+      var currentY = self.scroll();
+      if (currentY > lastScrollY && currentY > 120) {
+        navEl.classList.add('nav-hidden');
+      } else {
+        navEl.classList.remove('nav-hidden');
+      }
+      lastScrollY = currentY;
+    }
+  });
+
+  // ═══════════════════════════════════════
+  // 17. MAGNETIC HOVER on CTA buttons (desktop only)
+  // ═══════════════════════════════════════
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.hero-btn, .urgency-cta, .price-btn, .nav-cta').forEach(function(btn) {
+      btn.addEventListener('mousemove', function(e) {
+        var rect = btn.getBoundingClientRect();
+        var x = (e.clientX - rect.left - rect.width / 2) * 0.15;
+        var y = (e.clientY - rect.top - rect.height / 2) * 0.15;
+        gsap.to(btn, { x: x, y: y, duration: 0.3, ease: 'power2.out' });
+      });
+      btn.addEventListener('mouseleave', function() {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════
+  // 18. CONTACT MODAL
   // ═══════════════════════════════════════
   var modal = document.getElementById('contactModal');
   var modalBox = modal.querySelector('.modal-box');
@@ -1612,18 +1748,23 @@ window.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
   });
 
-  // Form submission via Formspree (fetch)
+  // Form submission via FormSubmit.co
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     formSubmitBtn.disabled = true;
     formSubmitBtn.textContent = 'Enviando...';
 
     var formData = new FormData(contactForm);
+    var jsonData = {};
+    formData.forEach(function(value, key) { jsonData[key] = value; });
 
     fetch(contactForm.action, {
       method: 'POST',
-      body: formData,
-      headers: { 'Accept': 'application/json' }
+      body: JSON.stringify(jsonData),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
     }).then(function(response) {
       if (response.ok) {
         contactForm.style.display = 'none';
