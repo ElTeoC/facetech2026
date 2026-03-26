@@ -1760,15 +1760,19 @@ window.addEventListener('DOMContentLoaded', function() {
       body: JSON.stringify(jsonData),
       headers: { 'Content-Type': 'application/json' }
     }).then(function(response) {
-      if (response.ok) {
-        contactForm.style.display = 'none';
-        formSuccess.style.display = 'block';
-      } else {
-        formError.style.display = 'block';
-        formSubmitBtn.disabled = false;
-        formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
-      }
-    }).catch(function() {
+      return response.json().then(function(data) {
+        if (response.ok) {
+          contactForm.style.display = 'none';
+          formSuccess.style.display = 'block';
+        } else {
+          formError.innerHTML = 'Error: ' + (data.detail || data.error || 'desconocido') + '<br>Escr&iacute;benos a <a href="mailto:info@facetech2026.com" style="color:var(--gold);">info@facetech2026.com</a>';
+          formError.style.display = 'block';
+          formSubmitBtn.disabled = false;
+          formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
+        }
+      });
+    }).catch(function(err) {
+      formError.innerHTML = 'Error de conexi&oacute;n. Escr&iacute;benos a <a href="mailto:info@facetech2026.com" style="color:var(--gold);">info@facetech2026.com</a>';
       formError.style.display = 'block';
       formSubmitBtn.disabled = false;
       formSubmitBtn.textContent = 'Enviar solicitud de inscripción';

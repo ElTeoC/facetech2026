@@ -32,13 +32,17 @@ module.exports = async function handler(req, res) {
   }
 
   // Create SMTP transport with Titan (GoDaddy)
+  const smtpPort = parseInt(process.env.SMTP_PORT) || 465;
   const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: parseInt(process.env.SMTP_PORT),
-    secure: true,
+    host: process.env.SMTP_HOST || 'smtp.titan.email',
+    port: smtpPort,
+    secure: smtpPort === 465,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS
+    },
+    tls: {
+      rejectUnauthorized: false
     }
   });
 
@@ -112,6 +116,10 @@ module.exports = async function handler(req, res) {
 
     return res.status(200).json({ success: true });
   } catch (err) {
-    return res.status(500).json({ error: 'Error enviando email' });
+    return res.status(500).json({
+      error: 'Error enviando email',
+      detail: err.message,
+      code: err.code
+    });
   }
 };
