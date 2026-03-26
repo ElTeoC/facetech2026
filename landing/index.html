@@ -532,6 +532,92 @@ nav {
 .btn-solid { background: var(--gold); color: var(--black); }
 .btn-solid:hover { background: var(--gold-light); }
 
+/* ─── CONTACT MODAL ─── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,0.85);
+  display: none; align-items: center; justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+  opacity: 0;
+}
+.modal-overlay.is-open { display: flex; }
+.modal-box {
+  width: 100%; max-width: 540px;
+  background: var(--navy);
+  border: 1px solid var(--gold);
+  padding: 2.5rem;
+  border-radius: 2px;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(20px);
+}
+.modal-close {
+  position: absolute; top: 1rem; right: 1rem;
+  background: none; border: none; color: var(--cream-dim);
+  font-size: 1.5rem; cursor: pointer; line-height: 1;
+  transition: color 0.2s;
+}
+.modal-close:hover { color: var(--gold); }
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem; font-weight: 600; color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.modal-subtitle {
+  font-size: 0.78rem; color: var(--cream-dim); margin-bottom: 1.8rem; line-height: 1.5;
+}
+.form-group { margin-bottom: 1.2rem; }
+.form-label {
+  display: block; font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--cream-dim); margin-bottom: 0.45rem;
+}
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%; padding: 0.8rem 1rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(200,169,110,0.2);
+  color: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem; font-weight: 300;
+  border-radius: 0;
+  -webkit-appearance: none;
+  transition: border-color 0.25s;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--gold); outline: none;
+}
+.form-select { cursor: pointer; }
+.form-select option { background: var(--navy); color: var(--cream); }
+.form-textarea { resize: vertical; min-height: 80px; }
+.form-submit {
+  display: block; width: 100%;
+  background: var(--gold); color: var(--black);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 1rem; border: none; cursor: pointer;
+  transition: background 0.25s;
+  margin-top: 0.5rem;
+}
+.form-submit:hover { background: var(--gold-light); }
+.form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.form-msg {
+  text-align: center; padding: 1.5rem 0; font-size: 0.9rem; line-height: 1.6;
+  display: none;
+}
+.form-msg.is-success { color: var(--gold); }
+.form-msg.is-error { color: #e57373; }
+@media (max-width: 600px) {
+  .modal-box { max-width: 95vw; padding: 1.5rem; }
+}
+
 /* ─── URGENCY ─── */
 #urgency { position: relative; overflow: hidden; }
 .urgency-bg {
@@ -626,7 +712,7 @@ footer {
 <!-- NAV -->
 <nav>
   <div class="nav-logo">FACETECH</div>
-  <a href="#pricing" class="nav-cta">Inscribirse</a>
+  <a href="#" class="nav-cta" data-open-modal>Inscribirse</a>
 </nav>
 
 <!-- ══════════════════════════════
@@ -1013,8 +1099,7 @@ footer {
           <li><span class="ck">&#10022;</span>Certificaci&oacute;n oficial FACETECH</li>
           <li><span class="ck">&#10022;</span>Elecci&oacute;n de UN m&oacute;dulo quir&uacute;rgico:<br><small style="color:var(--gold-dim);padding-left:0.3rem;">Cirug&iacute;a ORL &oacute; Oculopl&aacute;stica + Lifting</small></li>
         </ul>
-        <!-- Reemplazar href con Payment Link de Stripe -->
-        <a href="#pricing" class="price-btn btn-outline">Inscribirse en este paquete</a>
+        <a href="#" class="price-btn btn-outline" data-open-modal data-package="FACETECH + Medio Día — USD 2,500">Inscribirse en este paquete</a>
       </div>
       <div class="price-card featured reveal">
         <div class="price-badge">M&aacute;s completo</div>
@@ -1030,8 +1115,7 @@ footer {
           <li><span class="ck">&#10022;</span>Acceso a grabaciones quir&uacute;rgicas</li>
           <li><span class="ck">&#10022;</span>Certificaci&oacute;n Full Face FACETECH</li>
         </ul>
-        <!-- Reemplazar href con Payment Link de Stripe -->
-        <a href="#pricing" class="price-btn btn-solid">Inscribirse &mdash; Full Face</a>
+        <a href="#" class="price-btn btn-solid" data-open-modal data-package="Full Face Experience — USD 3,000">Inscribirse &mdash; Full Face</a>
       </div>
     </div>
   </div>
@@ -1049,12 +1133,106 @@ footer {
   <div class="urgency-content">
     <p class="s-label">Cupos limitados</p>
     <h2 class="urgency-title reveal">Asegura tu<br>lugar en<br><em>FACETECH</em></h2>
-    <p class="urgency-sub reveal">El congreso es <strong>100% virtual</strong> &mdash; accedes desde cualquier pa&iacute;s de iberoam&eacute;rica. Los cupos son limitados para mantener la calidad acad&eacute;mica. Pago seguro en USD v&iacute;a Stripe.</p>
+    <p class="urgency-sub reveal">El congreso es <strong>100% virtual</strong> &mdash; accedes desde cualquier pa&iacute;s de iberoam&eacute;rica. Los cupos son limitados para mantener la calidad acad&eacute;mica.</p>
     <a href="#pricing" class="urgency-cta reveal">Ver paquetes e inscribirse</a>
     <p class="urgency-note reveal">5 &ndash; 8 de agosto de 2026 &middot; Virtual &middot; Iberoam&eacute;rica</p>
-    <div class="stripe-line reveal">&#128274; Pagos procesados con Stripe &middot; SSL encriptado &middot; USD</div>
   </div>
 </section>
+
+<!-- ══════════════════════════════
+  MODAL — FORMULARIO DE CONTACTO / INTERÉS
+══════════════════════════════ -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+    <div class="modal-title">Reserva tu lugar</div>
+    <p class="modal-subtitle">Completa el formulario y nos pondremos en contacto contigo para finalizar tu inscripci&oacute;n.</p>
+
+    <!-- Formulario Formspree — reemplazar XXXXXXXX con tu ID real de Formspree -->
+    <form id="contactForm" action="https://formspree.io/f/XXXXXXXX" method="POST">
+      <input type="hidden" name="_subject" value="Nueva inscripción FACETECH 2026">
+
+      <div class="form-group">
+        <label class="form-label" for="fld-name">Nombre Completo *</label>
+        <input class="form-input" type="text" id="fld-name" name="nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fld-email">Correo Electr&oacute;nico *</label>
+        <input class="form-input" type="email" id="fld-email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fld-phone">N&uacute;mero de Celular *</label>
+        <input class="form-input" type="tel" id="fld-phone" name="celular" placeholder="(WhatsApp preferiblemente)" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fld-country">&iquest;Desde qu&eacute; pa&iacute;s nos escribe? *</label>
+        <select class="form-select" id="fld-country" name="pais" required>
+          <option value="" disabled selected>Seleccionar pa&iacute;s</option>
+          <option>M&eacute;xico</option>
+          <option>Colombia</option>
+          <option>Venezuela</option>
+          <option>Argentina</option>
+          <option>Chile</option>
+          <option>Per&uacute;</option>
+          <option>Ecuador</option>
+          <option>Bolivia</option>
+          <option>Paraguay</option>
+          <option>Uruguay</option>
+          <option>Costa Rica</option>
+          <option>Guatemala</option>
+          <option>Honduras</option>
+          <option>El Salvador</option>
+          <option>Nicaragua</option>
+          <option>Panam&aacute;</option>
+          <option>Cuba</option>
+          <option>Rep&uacute;blica Dominicana</option>
+          <option>Puerto Rico</option>
+          <option>Espa&ntilde;a</option>
+          <option>Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fld-city">Ciudad / Lugar de Residencia *</label>
+        <input class="form-input" type="text" id="fld-city" name="ciudad" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fld-specialty">Especialidad *</label>
+        <select class="form-select" id="fld-specialty" name="especialidad" required>
+          <option value="" disabled selected>Seleccionar especialidad</option>
+          <option>Oftalmolog&iacute;a / Oculopl&aacute;stica</option>
+          <option>Cirug&iacute;a Pl&aacute;stica Facial</option>
+          <option>Otorrinolaringolog&iacute;a</option>
+          <option>Cirug&iacute;a Maxilofacial</option>
+          <option>Otra especialidad m&eacute;dica</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fld-package">Paquete de inter&eacute;s *</label>
+        <select class="form-select" id="fld-package" name="paquete" required>
+          <option value="" disabled selected>Seleccionar paquete</option>
+          <option value="FACETECH + Medio Día — USD 2,500">FACETECH + Medio D&iacute;a &mdash; USD 2,500</option>
+          <option value="Full Face Experience — USD 3,000">Full Face Experience &mdash; USD 3,000</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="fld-comments">Comentarios o Preguntas Adicionales</label>
+        <textarea class="form-textarea" id="fld-comments" name="comentarios" rows="3"></textarea>
+      </div>
+
+      <button type="submit" class="form-submit" id="formSubmitBtn">Enviar solicitud de inscripci&oacute;n</button>
+    </form>
+
+    <div class="form-msg is-success" id="formSuccess">&iexcl;Gracias! Nos pondremos en contacto contigo muy pronto.</div>
+    <div class="form-msg is-error" id="formError">Hubo un error. Por favor escr&iacute;benos a <a href="mailto:info@facetech2026.com" style="color:var(--gold);">info@facetech2026.com</a></div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1368,6 +1546,98 @@ window.addEventListener('DOMContentLoaded', function() {
       end: 'bottom bottom',
       scrub: 0.3
     }
+  });
+
+  // ═══════════════════════════════════════
+  // 12. CONTACT MODAL
+  // ═══════════════════════════════════════
+  var modal = document.getElementById('contactModal');
+  var modalBox = modal.querySelector('.modal-box');
+  var modalCloseBtn = document.getElementById('modalClose');
+  var contactForm = document.getElementById('contactForm');
+  var packageSelect = document.getElementById('fld-package');
+  var formSuccess = document.getElementById('formSuccess');
+  var formError = document.getElementById('formError');
+  var formSubmitBtn = document.getElementById('formSubmitBtn');
+
+  function openModal(pkg) {
+    // Reset form state
+    contactForm.style.display = '';
+    formSuccess.style.display = 'none';
+    formError.style.display = 'none';
+    formSubmitBtn.disabled = false;
+
+    // Pre-select package if provided
+    if (pkg) {
+      packageSelect.value = pkg;
+    } else {
+      packageSelect.selectedIndex = 0;
+    }
+
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    if (typeof lenis !== 'undefined') lenis.stop();
+
+    // GSAP entrance
+    gsap.fromTo(modal, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: 'power2.out' });
+    gsap.fromTo(modalBox, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out', delay: 0.05 });
+  }
+
+  function closeModal() {
+    gsap.to(modalBox, { y: 20, opacity: 0, duration: 0.25, ease: 'power2.in' });
+    gsap.to(modal, {
+      opacity: 0, duration: 0.3, ease: 'power2.in', delay: 0.05,
+      onComplete: function() {
+        modal.classList.remove('is-open');
+        document.body.style.overflow = '';
+        if (typeof lenis !== 'undefined') lenis.start();
+      }
+    });
+  }
+
+  // Open modal from any [data-open-modal] button
+  document.querySelectorAll('[data-open-modal]').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal(btn.dataset.package || '');
+    });
+  });
+
+  // Close modal
+  modalCloseBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e) {
+    if (e.target === modal) closeModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+  });
+
+  // Form submission via Formspree (fetch)
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    formSubmitBtn.disabled = true;
+    formSubmitBtn.textContent = 'Enviando...';
+
+    var formData = new FormData(contactForm);
+
+    fetch(contactForm.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    }).then(function(response) {
+      if (response.ok) {
+        contactForm.style.display = 'none';
+        formSuccess.style.display = 'block';
+      } else {
+        formError.style.display = 'block';
+        formSubmitBtn.disabled = false;
+        formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
+      }
+    }).catch(function() {
+      formError.style.display = 'block';
+      formSubmitBtn.disabled = false;
+      formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
+    });
   });
 
 });
