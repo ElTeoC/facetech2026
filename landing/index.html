@@ -822,21 +822,13 @@ nav.nav-hidden { transform: translateY(-100%); }
 ══════════════════════════════ -->
 <div class="video-intro" id="videoIntro">
   <div class="video-intro-logo">FACETECH</div>
-  <video id="introVideo" playsinline preload="auto" poster="../fotos/foto-10.jpg">
+  <video id="introVideo" playsinline preload="auto" autoplay muted poster="../fotos/foto-10.jpg">
     <source src="../videos/video-hero.mov" type="video/mp4">
   </video>
   <div class="intro-progress" id="introProgress"></div>
-  <!-- Tap to play overlay — required for sound on mobile -->
-  <div class="intro-tap" id="introTap">
-    <div class="intro-tap-icon">
-      <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
-    </div>
-    <div class="intro-tap-text">Toca para iniciar</div>
-    <div class="intro-tap-sub">con sonido</div>
-  </div>
-  <div class="video-intro-controls" id="introControls" style="display:none;">
-    <button class="intro-sound" id="introSoundBtn" aria-label="Silenciar">
-      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>
+  <div class="video-intro-controls" id="introControls">
+    <button class="intro-sound" id="introSoundBtn" aria-label="Activar sonido">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/></svg>
     </button>
     <button class="intro-skip" id="introSkip">Saltar intro &rarr;</button>
   </div>
@@ -1287,7 +1279,7 @@ nav.nav-hidden { transform: translateY(-100%); }
     <div class="modal-title">Reserva tu lugar</div>
     <p class="modal-subtitle">Completa el formulario y nos pondremos en contacto contigo para finalizar tu inscripci&oacute;n.</p>
 
-    <form id="contactForm" action="/api/contact" method="POST">
+    <form id="contactForm" action="https://formsubmit.co/ajax/info@facetech2026.com" method="POST">
 
       <div class="form-group">
         <label class="form-label" for="fld-name">Nombre Completo *</label>
@@ -1406,12 +1398,10 @@ window.addEventListener('DOMContentLoaded', function() {
   gsap.registerPlugin(ScrollTrigger);
 
   // ═══════════════════════════════════════
-  // 0b. VIDEO INTRO — tap to play with sound
+  // 0b. VIDEO INTRO — autoplay muted, instant start
   // ═══════════════════════════════════════
   var introOverlay = document.getElementById('videoIntro');
   var introVideo = document.getElementById('introVideo');
-  var introTap = document.getElementById('introTap');
-  var introControls = document.getElementById('introControls');
   var introSkipBtn = document.getElementById('introSkip');
   var introSoundBtn = document.getElementById('introSoundBtn');
   var introProgress = document.getElementById('introProgress');
@@ -1435,72 +1425,40 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  function startIntroVideo() {
-    // Hide tap screen, show controls
-    introTap.style.display = 'none';
-    introControls.style.display = 'flex';
-
-    // Play with sound
-    introVideo.currentTime = 0;
-    introVideo.muted = false;
-    introVideo.play().then(function() {
-      // Sound is playing
-      introSoundBtn.querySelector('svg').innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/>';
-    }).catch(function() {
-      // Sound blocked, play muted
-      introVideo.muted = true;
-      introVideo.play().catch(function() { endIntro(); });
-    });
-  }
-
   if (introVideo) {
+    // Autoplay muted (works on all browsers including mobile)
+    introVideo.muted = true;
+    introVideo.play().catch(function() { endIntro(); });
+
     // Progress bar
     introVideo.addEventListener('timeupdate', function() {
       if (introVideo.duration) {
-        var pct = (introVideo.currentTime / introVideo.duration) * 100;
-        introProgress.style.width = pct + '%';
+        introProgress.style.width = (introVideo.currentTime / introVideo.duration) * 100 + '%';
       }
     });
 
     // Video ends → reveal page
     introVideo.addEventListener('ended', endIntro);
 
-    // Tap to start (user gesture = sound allowed)
-    introTap.addEventListener('click', startIntroVideo);
-
-    // On desktop, try autoplay with sound immediately
-    if (window.matchMedia('(hover: hover)').matches) {
-      introVideo.muted = false;
-      introVideo.play().then(function() {
-        // Autoplay with sound worked (desktop)
-        introTap.style.display = 'none';
-        introControls.style.display = 'flex';
-      }).catch(function() {
-        // Autoplay with sound failed, try muted
-        introVideo.muted = true;
-        introVideo.play().then(function() {
-          // Muted autoplay works — show tap for sound
-        }).catch(function() {
-          // Nothing works — show tap screen
-        });
-      });
-    }
-
     // Sound toggle
-    introSoundBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
+    introSoundBtn.addEventListener('click', function() {
       if (introVideo.muted) {
         introVideo.muted = false;
-        introSoundBtn.querySelector('svg').innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/>';
+        introSoundBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>';
       } else {
         introVideo.muted = true;
-        introSoundBtn.querySelector('svg').innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/>';
+        introSoundBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/></svg>';
       }
     });
   }
 
   // Skip button
   introSkipBtn.addEventListener('click', endIntro);
+
+  // Fallback: if video fails to load, skip after 4s
+  setTimeout(function() {
+    if (!introEnded && introVideo && introVideo.paused) endIntro();
+  }, 4000);
 
   // ═══════════════════════════════════════
   // 1. LENIS — SMOOTH SCROLL
@@ -1946,10 +1904,10 @@ window.addEventListener('DOMContentLoaded', function() {
     var jsonData = {};
     formData.forEach(function(value, key) { jsonData[key] = value; });
 
-    fetch('/api/contact', {
+    fetch(contactForm.action, {
       method: 'POST',
       body: JSON.stringify(jsonData),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
     }).then(function(response) {
       if (response.ok) {
         contactForm.style.display = 'none';
