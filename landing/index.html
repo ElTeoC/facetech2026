@@ -1191,11 +1191,7 @@ nav.nav-hidden { transform: translateY(-100%); }
     <div class="modal-title">Reserva tu lugar</div>
     <p class="modal-subtitle">Completa el formulario y nos pondremos en contacto contigo para finalizar tu inscripci&oacute;n.</p>
 
-    <form id="contactForm" action="https://formsubmit.co/ajax/info@facetech2026.com" method="POST">
-      <input type="hidden" name="_subject" value="Nueva inscripción FACETECH 2026">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_autoresponse" value="¡Gracias por tu interés en FACETECH 2026! Hemos recibido tu solicitud de inscripción correctamente. Nuestro equipo se pondrá en contacto contigo en las próximas 24-48 horas para confirmar los detalles de tu registro y proceso de pago. Si tienes alguna pregunta mientras tanto, no dudes en escribirnos a info@facetech2026.com. ¡Nos vemos en FACETECH 2026! — Equipo FACETECH">
+    <form id="contactForm" action="/api/contact" method="POST">
 
       <div class="form-group">
         <label class="form-label" for="fld-name">Nombre Completo *</label>
@@ -1749,7 +1745,7 @@ window.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
   });
 
-  // Form submission via FormSubmit.co
+  // Form submission via Vercel serverless function
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
     formSubmitBtn.disabled = true;
@@ -1759,13 +1755,10 @@ window.addEventListener('DOMContentLoaded', function() {
     var jsonData = {};
     formData.forEach(function(value, key) { jsonData[key] = value; });
 
-    fetch(contactForm.action, {
+    fetch('/api/contact', {
       method: 'POST',
       body: JSON.stringify(jsonData),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
+      headers: { 'Content-Type': 'application/json' }
     }).then(function(response) {
       if (response.ok) {
         contactForm.style.display = 'none';
