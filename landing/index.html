@@ -1270,7 +1270,12 @@ nav.nav-hidden { transform: translateY(-100%); }
       <button type="submit" class="form-submit" id="formSubmitBtn">Enviar solicitud de inscripci&oacute;n</button>
     </form>
 
-    <div class="form-msg is-success" id="formSuccess">&iexcl;Gracias! Nos pondremos en contacto contigo muy pronto.</div>
+    <div class="form-msg is-success" id="formSuccess">
+      <div style="font-size:2rem;margin-bottom:0.8rem;">&#10022;</div>
+      <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--white);margin-bottom:0.6rem;">&iexcl;Solicitud recibida!</div>
+      <p style="font-size:0.85rem;color:var(--cream-dim);line-height:1.7;margin-bottom:1rem;">Gracias por tu inter&eacute;s en <strong style="color:var(--cream);">FACETECH 2026</strong>. Nuestro equipo se pondr&aacute; en contacto contigo en las pr&oacute;ximas <strong style="color:var(--cream);">24&ndash;48 horas</strong> para confirmar tu inscripci&oacute;n y proceso de pago.</p>
+      <p style="font-size:0.75rem;color:var(--gold-dim);">Revisa tu correo (incluyendo spam) &middot; info@facetech2026.com</p>
+    </div>
     <div class="form-msg is-error" id="formError">Hubo un error. Por favor escr&iacute;benos a <a href="mailto:info@facetech2026.com" style="color:var(--gold);">info@facetech2026.com</a></div>
   </div>
 </div>
@@ -1760,19 +1765,15 @@ window.addEventListener('DOMContentLoaded', function() {
       body: JSON.stringify(jsonData),
       headers: { 'Content-Type': 'application/json' }
     }).then(function(response) {
-      return response.json().then(function(data) {
-        if (response.ok) {
-          contactForm.style.display = 'none';
-          formSuccess.style.display = 'block';
-        } else {
-          formError.innerHTML = 'Error: ' + (data.detail || data.error || 'desconocido') + '<br>Escr&iacute;benos a <a href="mailto:info@facetech2026.com" style="color:var(--gold);">info@facetech2026.com</a>';
-          formError.style.display = 'block';
-          formSubmitBtn.disabled = false;
-          formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
-        }
-      });
-    }).catch(function(err) {
-      formError.innerHTML = 'Error de conexi&oacute;n. Escr&iacute;benos a <a href="mailto:info@facetech2026.com" style="color:var(--gold);">info@facetech2026.com</a>';
+      if (response.ok) {
+        contactForm.style.display = 'none';
+        formSuccess.style.display = 'block';
+      } else {
+        formError.style.display = 'block';
+        formSubmitBtn.disabled = false;
+        formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
+      }
+    }).catch(function() {
       formError.style.display = 'block';
       formSubmitBtn.disabled = false;
       formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
