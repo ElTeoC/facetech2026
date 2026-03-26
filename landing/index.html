@@ -826,9 +826,16 @@ nav.nav-hidden { transform: translateY(-100%); }
     <source src="../videos/video-hero.mov" type="video/mp4">
   </video>
   <div class="intro-progress" id="introProgress"></div>
-  <div class="video-intro-controls" id="introControls">
-    <button class="intro-sound" id="introSoundBtn" aria-label="Activar sonido">
-      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/></svg>
+  <div class="intro-tap" id="introTap">
+    <div class="intro-tap-icon">
+      <svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg>
+    </div>
+    <div class="intro-tap-text">Toca para iniciar</div>
+    <div class="intro-tap-sub">con sonido</div>
+  </div>
+  <div class="video-intro-controls" id="introControls" style="display:none;">
+    <button class="intro-sound" id="introSoundBtn" aria-label="Silenciar">
+      <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>
     </button>
     <button class="intro-skip" id="introSkip">Saltar intro &rarr;</button>
   </div>
@@ -1402,10 +1409,12 @@ window.addEventListener('DOMContentLoaded', function() {
   gsap.registerPlugin(ScrollTrigger);
 
   // ═══════════════════════════════════════
-  // 0b. VIDEO INTRO — autoplay muted, instant start
+  // 0b. VIDEO INTRO — tap to play with sound
   // ═══════════════════════════════════════
   var introOverlay = document.getElementById('videoIntro');
   var introVideo = document.getElementById('introVideo');
+  var introTap = document.getElementById('introTap');
+  var introControls = document.getElementById('introControls');
   var introSkipBtn = document.getElementById('introSkip');
   var introSoundBtn = document.getElementById('introSoundBtn');
   var introProgress = document.getElementById('introProgress');
@@ -1429,18 +1438,18 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  if (introVideo) {
-    // Try autoplay WITH sound first
+  function startVideo() {
+    introTap.style.display = 'none';
+    introControls.style.display = 'flex';
+    introVideo.currentTime = 0;
     introVideo.muted = false;
-    introVideo.play().then(function() {
-      // Autoplay with sound worked — update icon to speaker on
-      introSoundBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>';
-    }).catch(function() {
-      // Sound blocked by browser — fallback to muted autoplay
+    introVideo.play().catch(function() {
       introVideo.muted = true;
       introVideo.play().catch(function() { endIntro(); });
     });
+  }
 
+  if (introVideo) {
     // Progress bar
     introVideo.addEventListener('timeupdate', function() {
       if (introVideo.duration) {
@@ -1448,28 +1457,36 @@ window.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // Video ends → reveal page
     introVideo.addEventListener('ended', endIntro);
 
-    // Sound toggle
-    introSoundBtn.addEventListener('click', function() {
-      if (introVideo.muted) {
-        introVideo.muted = false;
-        introSoundBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>';
-      } else {
+    // Tap to start with sound
+    introTap.addEventListener('click', startVideo);
+
+    // On desktop: try autoplay with sound
+    if (window.matchMedia('(hover: hover)').matches) {
+      introVideo.muted = false;
+      introVideo.play().then(function() {
+        introTap.style.display = 'none';
+        introControls.style.display = 'flex';
+      }).catch(function() {
+        // Desktop blocked sound too — show tap screen
         introVideo.muted = true;
-        introSoundBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/></svg>';
-      }
+        introVideo.pause();
+      });
+    }
+
+    // Sound toggle
+    introSoundBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      introVideo.muted = !introVideo.muted;
+      introSoundBtn.innerHTML = introVideo.muted
+        ? '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3z"/><path d="M16.5 12l4.5-4.5-1.4-1.4L15 10.6l-4.6-4.5L9 7.5l4.5 4.5-4.5 4.5 1.4 1.4 4.6-4.5 4.6 4.5 1.4-1.4z" transform="translate(2,0)"/></svg>'
+        : '<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8.5v7a4.5 4.5 0 0 0 2.5-3.5zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23z"/></svg>';
     });
   }
 
   // Skip button
   introSkipBtn.addEventListener('click', endIntro);
-
-  // Fallback: if video fails to load, skip after 4s
-  setTimeout(function() {
-    if (!introEnded && introVideo && introVideo.paused) endIntro();
-  }, 4000);
 
   // ═══════════════════════════════════════
   // 1. LENIS — SMOOTH SCROLL
