@@ -911,10 +911,14 @@ nav.nav-hidden { transform: translateY(-100%); }
         <p class="s-body"><strong>Cirug&iacute;a real en vivo. Discusi&oacute;n abierta. Criterio quir&uacute;rgico sin filtros.</strong> Esto es FACETECH.</p>
       </div>
       <div class="welcome-video-wrap" style="opacity:1;transform:none;">
-        <div class="welcome-video-slot">
-          <video controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;display:block;border-radius:12px;">
+        <div class="welcome-video-slot" id="welcomeVideoSlot">
+          <video id="welcomeVideo" playsinline preload="metadata" style="width:100%;height:100%;object-fit:cover;display:block;">
             <source src="../videos/welcome-video.mp4" type="video/mp4">
           </video>
+          <div class="video-play-ui" id="welcomePlayUI">
+            <div class="play-circle"><div class="play-tri"></div></div>
+            <span>Ver mensaje de bienvenida</span>
+          </div>
         </div>
       </div>
     </div>
@@ -1958,6 +1962,33 @@ window.addEventListener('DOMContentLoaded', function() {
       formSubmitBtn.textContent = 'Enviar solicitud de inscripción';
     });
   });
+
+  // ═══════════════════════════════════════
+  // WELCOME VIDEO — tap to play/pause
+  // ═══════════════════════════════════════
+  var welcomeVideo = document.getElementById('welcomeVideo');
+  var welcomePlayUI = document.getElementById('welcomePlayUI');
+  if (welcomeVideo && welcomePlayUI) {
+    welcomePlayUI.addEventListener('click', function() {
+      welcomeVideo.play();
+      gsap.to(welcomePlayUI, { opacity: 0, duration: 0.3, onComplete: function() {
+        welcomePlayUI.style.pointerEvents = 'none';
+      }});
+    });
+    welcomeVideo.addEventListener('click', function() {
+      if (welcomeVideo.paused) {
+        welcomeVideo.play();
+      } else {
+        welcomeVideo.pause();
+        gsap.to(welcomePlayUI, { opacity: 1, duration: 0.3 });
+        welcomePlayUI.style.pointerEvents = 'auto';
+      }
+    });
+    welcomeVideo.addEventListener('ended', function() {
+      gsap.to(welcomePlayUI, { opacity: 1, duration: 0.3 });
+      welcomePlayUI.style.pointerEvents = 'auto';
+    });
+  }
 
 });
 </script>
