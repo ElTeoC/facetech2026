@@ -910,18 +910,11 @@ nav.nav-hidden { transform: translateY(-100%); }
         </div>
         <p class="s-body"><strong>Cirug&iacute;a real en vivo. Discusi&oacute;n abierta. Criterio quir&uacute;rgico sin filtros.</strong> Esto es FACETECH.</p>
       </div>
-      <div class="welcome-video-wrap reveal">
+      <div class="welcome-video-wrap" style="opacity:1;transform:none;">
         <div class="welcome-video-slot">
-          <!-- TODO: Reemplazar este placeholder con el video de bienvenida (60-90s, los 3 doctores o Dr. Bareño hablando a cámara). Embed YouTube o <video> con controles visibles. -->
-          <div class="welcome-video-placeholder">
-            <div style="font-size:1.8rem;opacity:0.35;">&#127908;</div>
-            <span class="welcome-placeholder-label">VIDEO BIENVENIDA CON VOZ</span>
-            <p class="welcome-placeholder-desc">60-90s &middot; Los 3 doctores a c&aacute;mara. Directo y con convicci&oacute;n.</p>
-          </div>
-          <div class="video-play-ui">
-            <div class="play-circle"><div class="play-tri"></div></div>
-            <span>Ver mensaje de bienvenida</span>
-          </div>
+          <video controls playsinline preload="metadata" style="width:100%;height:100%;object-fit:contain;display:block;border-radius:12px;">
+            <source src="../videos/FACETECH_REEL_25MARZO.MP4" type="video/mp4">
+          </video>
         </div>
       </div>
     </div>
