@@ -604,9 +604,10 @@ nav {
 .price-amount {
   font-family: 'Cormorant Garamond', serif;
   font-size: 3.8rem; font-weight: 300; color: var(--gold); line-height: 1;
+  margin-bottom: 0.7rem;
 }
 .price-amount sup { font-size: 1.3rem; vertical-align: top; margin-top: 0.55rem; display: inline-block; }
-.price-currency { font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold-dim); margin-bottom: 1.4rem; }
+.price-currency { font-size: 0.6rem; letter-spacing: 0.14em; color: var(--gold-dim); margin-bottom: 1.4rem; margin-top: 0.2rem; }
 .price-features { list-style: none; margin-bottom: 1.8rem; }
 .price-features li {
   display: flex; gap: 0.7rem; align-items: flex-start;
@@ -815,7 +816,67 @@ nav.nav-hidden { transform: translateY(-100%); }
   .audience-img-slot { max-height: 480px; }
   .speakers-list { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
   .speaker-photo { min-height: 0; }
-  .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; }
+  .pricing-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: stretch; }
+  .price-card { display: flex; flex-direction: column; }
+  .price-card .price-features { flex-grow: 1; }
+  .deposit-banner { display: grid; grid-template-columns: auto 1fr auto; gap: 2rem; align-items: center; padding: 1.6rem 2rem; }
+  .deposit-banner-step { text-align: left; }
+  .deposit-banner-amount { text-align: right; padding-left: 1.5rem; border-left: 1px solid rgba(200,169,110,0.18); }
+}
+/* ─── DEPOSIT BANNER (step 1) ─── */
+.deposit-banner {
+  position: relative;
+  border: 1px solid var(--gold);
+  background: linear-gradient(135deg, rgba(200,169,110,0.08) 0%, rgba(200,169,110,0.02) 100%);
+  padding: 1.5rem 1.4rem;
+  margin-bottom: 2rem;
+  display: flex; flex-direction: column;
+  gap: 1.2rem;
+  text-align: center;
+}
+.deposit-step-label {
+  display: inline-block;
+  font-size: 0.55rem; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--black); background: var(--gold);
+  padding: 0.32rem 0.85rem;
+  margin-bottom: 0.6rem;
+}
+.deposit-step-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.7rem; font-weight: 600;
+  color: var(--white); line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+.deposit-step-sub {
+  font-size: 0.78rem; color: var(--cream-dim);
+  line-height: 1.55;
+}
+.deposit-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem; font-weight: 300;
+  color: var(--gold); line-height: 1;
+}
+.deposit-amount sup { font-size: 1rem; vertical-align: top; margin-top: 0.4rem; display: inline-block; }
+.deposit-amount-label {
+  font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold-dim); margin-top: 0.4rem;
+}
+.deposit-features {
+  list-style: none; margin: 0;
+  display: flex; flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.78rem; color: var(--cream-dim);
+  line-height: 1.5; text-align: left;
+}
+.deposit-features li { display: flex; gap: 0.55rem; align-items: flex-start; }
+.deposit-features .ck { color: var(--gold); flex-shrink: 0; font-size: 0.7rem; margin-top: 0.1rem; }
+.price-stage {
+  display: inline-block;
+  font-size: 0.55rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 0.6rem;
 }
 </style>
 </head>
@@ -1060,7 +1121,7 @@ nav.nav-hidden { transform: translateY(-100%); }
     <h2 class="s-title reveal">&iquest;Para qui&eacute;n es<br><em>FACETECH?</em></h2>
     <div class="divider reveal"></div>
     <div class="audience-img-slot reveal">
-      <img src="../fotos/doctores-grupo.jpg" alt="Grupo de doctores FACETECH 2026" loading="lazy" decoding="async">
+      <img src="../fotos/audience-group.jpg" alt="Grupo de doctores FACETECH 2026" loading="lazy" decoding="async">
     </div>
     <div class="audience-items">
       <div class="audience-item reveal"><div><strong>Oftalm&oacute;logos / Oculopl&aacute;sticos</strong>Que integran o quieren integrar el rejuvenecimiento facial global en su pr&aacute;ctica.</div></div>
@@ -1238,37 +1299,63 @@ nav.nav-hidden { transform: translateY(-100%); }
     <h2 class="s-title reveal">Elige tu<br><em>experiencia</em></h2>
     <div class="divider reveal"></div>
     <div class="pricing-note reveal">
-      Todos los paquetes incluyen el <strong>CORE FACETECH completo</strong> &mdash; 14 horas de teor&iacute;a avanzada y certificaci&oacute;n oficial. La diferencia est&aacute; en el acceso a los m&oacute;dulos quir&uacute;rgicos en vivo.
+      El acceso al congreso comienza con una <strong>reserva anticipada de USD 500</strong> que asegura tu cupo y se descuenta del valor total del paquete que elijas a continuaci&oacute;n.
     </div>
+
+    <div class="deposit-banner reveal">
+      <div class="deposit-banner-step">
+        <span class="deposit-step-label">Paso 1 &middot; Reserva</span>
+        <div class="deposit-step-title">Reserva tu cupo</div>
+        <p class="deposit-step-sub">Acceso controlado por perfil profesional. Se descuenta del valor total del paquete elegido.</p>
+      </div>
+      <ul class="deposit-features">
+        <li><span class="ck">&#10022;</span>Aseguras tu participaci&oacute;n</li>
+        <li><span class="ck">&#10022;</span>Prioridad en selecci&oacute;n de experiencia</li>
+        <li><span class="ck">&#10022;</span>Acceso a precios de primera etapa</li>
+      </ul>
+      <div class="deposit-banner-amount">
+        <div class="deposit-amount"><sup>$</sup>500</div>
+        <div class="deposit-amount-label">USD &middot; Reserva anticipada</div>
+      </div>
+    </div>
+
     <div class="pricing-cards">
+
       <div class="price-card reveal">
-        <div class="price-name">FACETECH<br>+ Medio D&iacute;a</div>
-        <p class="price-tagline">Teor&iacute;a completa m&aacute;s un m&oacute;dulo quir&uacute;rgico a tu elecci&oacute;n.</p>
+        <div class="price-stage">Paso 2 &middot; Primera etapa con descuento</div>
+        <div class="price-name">FACETECH<br>1 D&iacute;a</div>
+        <p class="price-tagline">Accede a un d&iacute;a completo del congreso, seg&uacute;n tu inter&eacute;s cl&iacute;nico.</p>
         <div class="price-amount"><sup>$</sup>2,500</div>
         <div class="price-currency">USD &middot; Pago &uacute;nico</div>
         <ul class="price-features">
-          <li><span class="ck">&#10022;</span>14 horas de teor&iacute;a avanzada (D&iacute;as 1 y 2 am)</li>
-          <li><span class="ck">&#10022;</span>Certificaci&oacute;n oficial FACETECH</li>
-          <li><span class="ck">&#10022;</span>Elecci&oacute;n de UN m&oacute;dulo quir&uacute;rgico:<br><small style="color:var(--gold-dim);padding-left:0.3rem;">Cirug&iacute;a ORL &oacute; Oculopl&aacute;stica + Lifting</small></li>
+          <li><span class="ck">&#10022;</span>Acceso a 1 d&iacute;a completo del congreso</li>
+          <li><span class="ck">&#10022;</span>Incluye teor&iacute;a avanzada del d&iacute;a seleccionado</li>
+          <li><span class="ck">&#10022;</span>Posibilidad de vivir cirug&iacute;a en vivo<br><small style="color:var(--gold-dim);padding-left:0.3rem;">(seg&uacute;n el d&iacute;a elegido)</small></li>
+          <li><span class="ck">&#10022;</span>Certificaci&oacute;n de asistencia</li>
+          <li><span class="ck">&#10022;</span>Cupos limitados</li>
         </ul>
-        <a href="#" class="price-btn btn-outline" data-open-modal data-package="FACETECH + Medio Día — USD 2,500">Inscribirse en este paquete</a>
+        <a href="#" class="price-btn btn-outline" data-open-modal data-package="FACETECH 1 Día — USD 2,500">Reservar mi cupo</a>
       </div>
+
       <div class="price-card featured reveal">
         <div class="price-badge">M&aacute;s completo</div>
-        <div class="price-name">FULL FACE<br>Experience</div>
-        <p class="price-tagline">La experiencia FACETECH completa. Todo incluido.</p>
+        <div class="price-stage" style="color:var(--gold);">Paso 2 &middot; Primera etapa con descuento</div>
+        <div class="price-name">FULL FACE<br>Experience &mdash; 3 D&iacute;as</div>
+        <p class="price-tagline">La experiencia completa FACETECH. Formaci&oacute;n + cirug&iacute;a + criterio.</p>
         <div class="price-amount"><sup>$</sup>3,000</div>
         <div class="price-currency">USD &middot; Pago &uacute;nico</div>
         <ul class="price-features">
-          <li><span class="ck">&#10022;</span>14 horas de teor&iacute;a avanzada (D&iacute;as 1 y 2 am)</li>
-          <li><span class="ck">&#10022;</span>Cirug&iacute;a ORL en vivo &mdash; D&iacute;a 2 tarde</li>
-          <li><span class="ck">&#10022;</span>Oculopl&aacute;stica + Lifting endosc&oacute;pico &mdash; D&iacute;a 3</li>
-          <li><span class="ck">&#10022;</span>Asientos preferenciales en transmisi&oacute;n</li>
-          <li><span class="ck">&#10022;</span>Acceso a grabaciones quir&uacute;rgicas</li>
+          <li><span class="ck">&#10022;</span>Acceso a los 3 d&iacute;as del congreso</li>
+          <li><span class="ck">&#10022;</span>Teor&iacute;a avanzada de alta intensidad</li>
+          <li><span class="ck">&#10022;</span>Cirug&iacute;a ORL en vivo &mdash; D&iacute;a 2</li>
+          <li><span class="ck">&#10022;</span>Cirug&iacute;a oculopl&aacute;stica + lifting endosc&oacute;pico &mdash; D&iacute;a 3</li>
+          <li><span class="ck">&#10022;</span>Discusi&oacute;n cl&iacute;nica en tiempo real</li>
           <li><span class="ck">&#10022;</span>Certificaci&oacute;n Full Face FACETECH</li>
+          <li><span class="ck">&#10022;</span>Cupos limitados &mdash; formato reducido</li>
         </ul>
-        <a href="#" class="price-btn btn-solid" data-open-modal data-package="Full Face Experience — USD 3,000">Inscribirse &mdash; Full Face</a>
+        <a href="#" class="price-btn btn-solid" data-open-modal data-package="Full Face Experience — USD 3,000">Reservar mi cupo &mdash; Full Face</a>
       </div>
+
     </div>
   </div>
 </section>
@@ -1370,8 +1457,8 @@ nav.nav-hidden { transform: translateY(-100%); }
         <label class="form-label" for="fld-package">Paquete de inter&eacute;s *</label>
         <select class="form-select" id="fld-package" name="paquete" required>
           <option value="" disabled selected>Seleccionar paquete</option>
-          <option value="FACETECH + Medio Día — USD 2,500">FACETECH + Medio D&iacute;a &mdash; USD 2,500</option>
-          <option value="Full Face Experience — USD 3,000">Full Face Experience &mdash; USD 3,000</option>
+          <option value="FACETECH 1 Día — USD 2,500 (Reserva USD 500)">FACETECH 1 D&iacute;a &mdash; USD 2,500</option>
+          <option value="Full Face Experience — USD 3,000 (Reserva USD 500)">Full Face Experience &mdash; USD 3,000</option>
         </select>
       </div>
 
